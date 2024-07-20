@@ -1,0 +1,74 @@
+# Django #
+*.log
+*.pot
+*.pyc
+*.py[dco]
+__pycache__/
+local_settings.py
+
+# If your build process includes a .env file with environment variables
+.env
+
+# Django stuff:
+*.sqlite3
+*.mo
+*.pot
+*.pyc
+*.py[cod]
+__pycache__/
+*.swp
+*~
+*.swo
+
+# If your virtualenv directory is within the project
+venv/
+env/
+
+# Ignore IDE/editor specific files
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Node.js
+node_modules/
+
+# Static files
+/static/
+!static/.keep
+
+# Media files
+/media/
+
+# Django migrations
+*/migrations/*
+
+# Pipenv
+Pipfile.lock
+
+# If you're using macOS, you might want to ignore DS_Store files
+.DS_Store
+
+# If you're using docker
+*.log
+*.pid
+*.seed
+*.cover
+*.py[cod]
+__pycache__/
+docs/_build/
+target/
+
+# Environment variables file
+.env
+
+# Python egg metadata
+*.egg-info/
+.installed.cfg
+*.egg
+
+# MyPy
+.mypy_cache/
+
+# Pyre type checker
+.pyre/
