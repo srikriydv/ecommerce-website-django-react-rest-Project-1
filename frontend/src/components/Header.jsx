@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function Header() {
   const linkStyle = {
@@ -19,20 +20,20 @@ function Header() {
           >
             <span className="navbar-toggler-icon"></span>
           </button>
-          <a className="navbar-brand" style={linkStyle} href="#">
+          <Link className="navbar-brand" style={linkStyle} to="/">
             Python Market Place
-          </a>
+          </Link>
           <div className="collapse navbar-collapse" id="navbarTogglerDemo03">
             <ul className="navbar-nav ms-auto mt-2 mt-lg-0">
               <li className="nav-item active">
-                <a className="nav-link" aria-current="page" href="#">
+                <Link className="nav-link" aria-current="page" to="/">
                   Home
-                </a>
+                </Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#">
+              <Link className="nav-link" to="/categories">
                   Categories
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
