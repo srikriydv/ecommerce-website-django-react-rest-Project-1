@@ -4,9 +4,6 @@ import Header from "./components/Header";
 
 function App() {
   const [count, setCount] = useState(0);
-  const linkStyle = {
-    fontSize: "40px",
-  };
   return (
     <>
       <Header />
@@ -328,6 +325,84 @@ function App() {
             {/* Seller Box End  */}
           </div>
           {/* End Popular Catagories */}
+
+          {/* Review and Ratings  */}
+          <div id="carouselExampleIndicators" className="carousel slide my-4 border bg-dark text-white p-4" data-bs-ride="carousel">
+            <div className="carousel-indicators">
+              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" className="active" aria-current="true" aria-label="Slide 1"></button>
+              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+            <div className="carousel-inner">
+              <div className="carousel-item active">
+                <figure className="text-center">
+                  <blockquote className="blockquote">
+                    <p>Customer 1 review</p>
+                  </blockquote>
+                  <figcaption className="blockquote-footer">
+                    <i className="fa fa-star text-warning"></i>
+                    <i className="fa fa-star text-warning"></i>
+                    <i className="fa fa-star text-warning"></i>
+                    <cite title="Source Title">Customer Name</cite>
+                  </figcaption>
+                </figure>
+              </div>
+              <div className="carousel-item">
+                <figure className="text-center">
+                  <blockquote className="blockquote">
+                    <p>Customer 2 review </p>
+                  </blockquote>
+                  <figcaption className="blockquote-footer">
+                    <i className="fa fa-star text-warning"></i>
+                    <i className="fa fa-star text-warning"></i>
+                    <i className="fa fa-star text-warning"></i>
+                    <i className="fa fa-star text-warning"></i>
+                    <cite title="Source Title">Customer Name</cite>
+                  </figcaption>
+                </figure>
+              </div>
+              <div className="carousel-item">
+                <figure className="text-center">
+                  <blockquote className="blockquote">
+                    <p>Customer 3 review</p>
+                  </blockquote>
+                  <figcaption className="blockquote-footer">
+                    <i className="fa fa-star text-warning"></i>
+                    <i className="fa fa-star text-warning"></i>
+                    <i className="fa fa-star text-warning"></i>
+                    <cite title="Source Title">Customer Name</cite>
+                  </figcaption>
+                </figure>
+              </div>
+            </div>
+            <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+              <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span className="visually-hidden">Previous</span>
+            </button>
+            <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+              <span className="carousel-control-next-icon" aria-hidden="true"></span>
+              <span className="visually-hidden">Next</span>
+            </button>
+          </div>
+          {/* End Review and Ratings  */}
+          {/* footer  */}
+          <div class="container">
+            <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top pt-3">
+              <div class="col-md-4 d-flex align-items-center">
+                <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
+                  Python Market Place
+                </a>
+                <span class="mb-3 mb-md-0 text-body-secondary">© 2024 Company, Inc</span>
+              </div>
+
+              <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+                <li class="ms-3"><a class="text-body-secondary" href="#"><i class="fa-brands fa-facebook fa-2x"></i></a></li>
+                <li class="ms-3"><a class="text-body-secondary" href="#"><i class="fa-brands fa-instagram fa-2x"></i></a></li>
+                <li class="ms-3"><a class="text-body-secondary" href="#"><i class="fa-brands fa-twitter fa-2x"></i></a></li>
+              </ul>
+            </footer>
+          </div>
+          {/* End Footer */}
         </div>
       </main>
     </>

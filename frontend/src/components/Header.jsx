@@ -1,6 +1,9 @@
 import React from "react";
 
 function Header() {
+  const linkStyle = {
+    fontSize: "40px",
+  };
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-dark bg-success">
