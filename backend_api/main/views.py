@@ -2,6 +2,7 @@ from . import serializers
 from rest_framework import generics, permissions, pagination, viewsets
 from . import models
 
+# Vender View
 class VendorList(generics.ListCreateAPIView):
     queryset = models.Vendor.objects.all()
     serializer_class = serializers.VendorSerializer
@@ -11,6 +12,7 @@ class vendorDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = models.Vendor.objects.all()
     serializer_class = serializers.VendorDetailSerializer
 
+# Product View
 class ProductList(generics.ListCreateAPIView):
     queryset = models.Product.objects.all()
     serializer_class = serializers.ProductListSerializer
@@ -20,7 +22,7 @@ class ProductDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = models.Product.objects.all()
     serializer_class = serializers.ProductDetailSerializer
 
-# Customers
+# Customers View
 class CustomerList(generics.ListCreateAPIView):
     queryset = models.Customer.objects.all()
     serializer_class = serializers.CustomerSerializer
@@ -30,7 +32,7 @@ class CustomerDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = models.Customer.objects.all()
     serializer_class = serializers.CustomerDetailSerializer
 
-# Order
+# Order View
 class OrderList(generics.ListCreateAPIView):
     queryset = models.Order.objects.all()
     serializer_class = serializers.OrderSerializer
@@ -46,10 +48,22 @@ class OrderDetail(generics.ListAPIView):
         order_items=models.OrderItems.objects.filter(order=order)
         return order_items
     
+# Address Viewset
 class CustomerAddressViewset(viewsets.ModelViewSet):
     serializer_class = serializers.CustomerAddressSerializer
     queryset = models.CustomerAddress.objects.all()
 
+# Product Rating Viewset
 class ProductRatingViewset(viewsets.ModelViewSet):
     serializer_class = serializers.ProductRatingSerializer
     queryset = models.ProductRating.objects.all()
+
+# Catagory View
+class CatagoryList(generics.ListCreateAPIView):
+    queryset = models.ProductCatagory.objects.all()
+    serializer_class = serializers.CatagorySerializer
+    # permission_classes = [permissions.IsAuthenticated]
+
+class CatagoryDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = models.ProductCatagory.objects.all()
+    serializer_class = serializers.CatagoryDetailSerializer

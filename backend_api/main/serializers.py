@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from . import models
 
+# Vender Serializer
 class VendorSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Vendor
@@ -19,6 +20,7 @@ class VendorDetailSerializer(serializers.ModelSerializer):
         super(VendorDetailSerializer, self).__init__(*args, **kwargs)
         # self.Meta.depth = 1
 
+# product Serializer
 class ProductListSerializer(serializers.ModelSerializer):
     # vender = VenderSerializer()  # Use nested VenderSerializer
     product_ratings = serializers.StringRelatedField(many=True, read_only=True)
@@ -42,6 +44,7 @@ class ProductDetailSerializer(serializers.ModelSerializer):
         super(ProductDetailSerializer, self).__init__(*args, **kwargs)
         # self.Meta.depth = 1
 
+# Customer Serializer
 class CustomerSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Customer
@@ -79,6 +82,7 @@ class OrderDetailSerializer(serializers.ModelSerializer):
         super(OrderDetailSerializer, self).__init__(*args, **kwargs)
         self.Meta.depth = 1
 
+# Address Serializer
 class CustomerAddressSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.CustomerAddress
@@ -88,6 +92,7 @@ class CustomerAddressSerializer(serializers.ModelSerializer):
         super(CustomerAddressSerializer, self).__init__(*args, **kwargs)
         self.Meta.depth = 1
 
+# Rating Serializer
 class ProductRatingSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.ProductRating
@@ -96,3 +101,22 @@ class ProductRatingSerializer(serializers.ModelSerializer):
     def __init__(self, *args, **kwargs):
         super(ProductRatingSerializer, self).__init__(*args, **kwargs)
         self.Meta.depth = 1
+
+# Catagory Serializer
+class CatagorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.ProductCatagory
+        fields = ['id','title', 'details']
+    
+    def __init__(self, *args, **kwargs):
+        super(CatagorySerializer, self).__init__(*args, **kwargs)
+        # self.Meta.depth = 1
+
+class CatagoryDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.ProductCatagory
+        fields = ['id', 'title', 'details']
+    
+    def __init__(self, *args, **kwargs):
+        super(CatagoryDetailSerializer, self).__init__(*args, **kwargs)
+        # self.Meta.depth = 1
