@@ -95,15 +95,6 @@ function ProductDetail(props) {
             className="carousel carousel-dark slide"
             data-bs-ride="carousel"
           >
-            <ol className="carousel-indicators">
-              <li
-                data-target="#relatedProductsSlider"
-                data-slide-to="0"
-                className="active"
-              ></li>
-              <li data-target="#relatedProductsSlider" data-slide-to="1"></li>
-              <li data-target="#relatedProductsSlider" data-slide-to="2"></li>
-            </ol>
             <div className="carousel-inner">
               <div className="carousel-item active">
                 <div className="row mb-5">
