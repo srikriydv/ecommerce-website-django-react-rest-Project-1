@@ -35,6 +35,23 @@ function Header() {
                   Categories
                 </Link>
               </li>
+              <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            My Account
+          </a>
+          <ul class="dropdown-menu">
+            <li><Link class="dropdown-item" to="/customer/login">Login</Link></li>
+            <li><Link class="dropdown-item" to="/customer/register">Register</Link></li>
+            <li><hr class="dropdown-divider"/></li>
+            <li><a class="dropdown-item" href="#">Dashboard</a></li>
+            <li><a class="dropdown-item" href="#">logout</a></li>
+          </ul>
+        </li>
+              <li className="nav-item">
+              <Link className="nav-link" to="/checkout">
+                  My Cart (4)
+                </Link>
+              </li>
             </ul>
           </div>
         </div>
