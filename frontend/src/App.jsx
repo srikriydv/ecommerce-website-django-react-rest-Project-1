@@ -16,6 +16,9 @@ import Dashboard from "./components/Customer/Dashboard.jsx";
 import Orders from "./components/Customer/Orders.jsx";
 import OrderSuccess from "./components/OrderSuccess.jsx";
 import OrderFailure from "./components/OrderFailure.jsx";
+import Wishlist from "./components/Customer/Wishlist.jsx";
+import Profile from "./components/Customer/Profile.jsx";
+import ChangePassword from "./components/Customer/ChangePassword.jsx";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -35,6 +38,9 @@ function App() {
           <Route path="/customer/login" element={<Login/>} />
           <Route path="/customer/dashboard" element={<Dashboard />} />
           <Route path="/customer/orders" element={<Orders />} />
+          <Route path="/customer/wishlist" element={<Wishlist />} />
+          <Route path="/customer/profile" element={<Profile />} />
+          <Route path="/customer/change-password" element={<ChangePassword />} />
         </Routes>
       <Footer />
     </>

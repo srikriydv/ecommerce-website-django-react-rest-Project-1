@@ -9,8 +9,9 @@ function Sidebar() {
                 <ul className="list-group">
                     <Link to="/customer/dashboard" className="list-group-item" aria-current="true">Dashboard</Link>
                     <Link to="/customer/orders" className="list-group-item">Orders</Link>
-                    <Link className="list-group-item">Wishlist</Link>
-                    <Link className="list-group-item">Profile</Link>
+                    <Link to="/customer/wishlist" className="list-group-item">Wishlist</Link>
+                    <Link to="/customer/profile" className="list-group-item">Profile</Link>
+                    <Link to="/customer/change-password" className="list-group-item">Change Password</Link>
                     <Link className="list-group-item">Addresses</Link>
                     <Link className="list-group-item text-danger">Logout</Link>
                 </ul>
