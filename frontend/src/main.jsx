@@ -5,6 +5,8 @@ import App from './App.jsx'
 // index.js or App.js
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
+// index.js or App.js
+import '@fortawesome/fontawesome-free/css/all.min.css';
 
 
 

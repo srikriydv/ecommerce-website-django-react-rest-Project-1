@@ -1,0 +1,21 @@
+import { Link } from "react-router-dom";
+
+function Sidebar() {
+
+
+    return (
+        <>
+
+                <ul className="list-group">
+                    <Link to="/customer/dashboard" className="list-group-item" aria-current="true">Dashboard</Link>
+                    <Link to="/customer/orders" className="list-group-item">Orders</Link>
+                    <Link className="list-group-item">Wishlist</Link>
+                    <Link className="list-group-item">Profile</Link>
+                    <Link className="list-group-item">Addresses</Link>
+                    <Link className="list-group-item text-danger">Logout</Link>
+                </ul>
+        </>
+    )
+}
+
+export default Sidebar;

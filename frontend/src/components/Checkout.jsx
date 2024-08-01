@@ -25,23 +25,23 @@ function Checkout(props) {
                                             <Link><img src={logo} className="img-thumbnail" width={70} alt="" /></Link>
                                         </td>
                                         <td><Link>Django</Link></td>
-                                        <td>Rs 500</td>{" "}
+                                        <td>Rs 500</td>
                                     </tr>
                                     <tr>
-                                        <td>1</td>
+                                        <td>2</td>
                                         <td>
                                             <Link><img src={logo} className="img-thumbnail" width={70} alt="" /></Link>
                                         </td>
                                         <td><Link>PHP</Link></td>
-                                        <td>Rs 800</td>{" "}
+                                        <td>Rs 800</td>
                                     </tr>
                                     <tr>
-                                        <td>1</td>
+                                        <td>3</td>
                                         <td>
                                             <Link><img src={logo} className="img-thumbnail" width={70} alt="" /></Link>
                                         </td>
                                         <td><Link>Flask</Link></td>
-                                        <td>Rs 900</td>{" "}
+                                        <td>Rs 900</td>
                                     </tr>
                                 </tbody>
                                 <tfoot>
