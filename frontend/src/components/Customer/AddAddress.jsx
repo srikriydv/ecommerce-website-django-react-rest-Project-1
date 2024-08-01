@@ -1,28 +1,24 @@
 import Sidebar from "./Sidebar";
 
-function ChangePassword() {
+function AddAddress() {
 
 
     return (
         <>
             <div className="container mt-4">
-                <h3 className="mb-4">Change Password</h3>
+                <h3 className="mb-4">Add Address</h3>
                 <div className="row">
                     <div className="col-md-3 col-12 mb-2">
                         <Sidebar />
                     </div>
                     <div className="col-md-9 col-12 mb-2">
-                    <div className="card">
-                            <h4 className="card-header">Change Password</h4>
+                        <div className="card">
+                            <h4 className="card-header">Add Address</h4>
                             <div className="card-body">
                                 <form>
                                     <div className="mb-3">
-                                        <label for="pwd" className="form-label">New Password</label>
-                                        <input type="password" className="form-control" id="pwd" />
-                                    </div>
-                                    <div className="mb-3">
-                                        <label for="cpwd" className="form-label">Confirm Password</label>
-                                        <input type="password" className="form-control" id="cpwd" />
+                                        <label for="address" className="form-label">Address</label>
+                                        <textarea type="text" className="form-control" id="firstName"></textarea>
                                     </div>
                                     <button type="submit" className="btn btn-primary">Submit</button>
                                 </form>
@@ -35,4 +31,4 @@ function ChangePassword() {
     )
 }
 
-export default ChangePassword;
+export default AddAddress;

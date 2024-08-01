@@ -19,6 +19,8 @@ import OrderFailure from "./components/OrderFailure.jsx";
 import Wishlist from "./components/Customer/Wishlist.jsx";
 import Profile from "./components/Customer/Profile.jsx";
 import ChangePassword from "./components/Customer/ChangePassword.jsx";
+import AddressList from "./components/Customer/AddressList.jsx";
+import AddAddress from "./components/Customer/AddAddress.jsx";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -41,6 +43,8 @@ function App() {
           <Route path="/customer/wishlist" element={<Wishlist />} />
           <Route path="/customer/profile" element={<Profile />} />
           <Route path="/customer/change-password" element={<ChangePassword />} />
+          <Route path="/customer/addresses" element={<AddressList />} />
+          <Route path="/customer/add-address" element={<AddAddress />} />
         </Routes>
       <Footer />
     </>
