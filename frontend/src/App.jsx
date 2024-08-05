@@ -27,7 +27,11 @@ import SellerLogin from "./components/seller/SellerLogin.jsx";
 import SellerDashboard from "./components/seller/SellerDashboard.jsx";
 import SellerProducts from "./components/seller/SellerProducts.jsx";
 import AddProduct from "./components/seller/AddProduct.jsx";
-
+import VenderOrders from "./components/seller/VenderOrders.jsx";
+import Customers from "./components/seller/Customers.jsx";
+import Reports from "./components/seller/Reports.jsx";
+import VendorProfile from "./components/seller/VendorProfile.jsx";
+import VendorChangePassword from "./components/seller/VendorChangePassword.jsx";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -59,6 +63,11 @@ function App() {
           <Route path="/seller/dashboard" element={<SellerDashboard />} />
           <Route path="/seller/products" element={<SellerProducts />} />
           <Route path="/seller/add-product" element={<AddProduct />} />
+          <Route path="/seller/orders" element={<VenderOrders />} />
+          <Route path="/seller/customers" element={<Customers />} />
+          <Route path="/seller/reports" element={<Reports />} />
+          <Route path="/seller/profile" element={<VendorProfile />} />
+          <Route path="/seller/change-password" element={<VendorChangePassword />} />
         </Routes>
       <Footer />
     </>
