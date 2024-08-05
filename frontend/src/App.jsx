@@ -21,6 +21,13 @@ import Profile from "./components/Customer/Profile.jsx";
 import ChangePassword from "./components/Customer/ChangePassword.jsx";
 import AddressList from "./components/Customer/AddressList.jsx";
 import AddAddress from "./components/Customer/AddAddress.jsx";
+// Seller Panel
+import SellerRegister from "./components/seller/SellerRegister.jsx";
+import SellerLogin from "./components/seller/SellerLogin.jsx";
+import SellerDashboard from "./components/seller/SellerDashboard.jsx";
+import SellerProducts from "./components/seller/SellerProducts.jsx";
+import AddProduct from "./components/seller/AddProduct.jsx";
+
 
 function App() {
   const [count, setCount] = useState(0);
@@ -36,6 +43,7 @@ function App() {
           <Route path="/checkout" element={<Checkout/>} />
           <Route path="/order/success" element={<OrderSuccess />} />
           <Route path="/order/failure" element={<OrderFailure />} />
+          {/* customer routes */}
           <Route path="/customer/register" element={<Register/>} />
           <Route path="/customer/login" element={<Login/>} />
           <Route path="/customer/dashboard" element={<Dashboard />} />
@@ -45,6 +53,12 @@ function App() {
           <Route path="/customer/change-password" element={<ChangePassword />} />
           <Route path="/customer/addresses" element={<AddressList />} />
           <Route path="/customer/add-address" element={<AddAddress />} />
+          {/* Seller routes */}
+          <Route path="/seller/register" element={<SellerRegister />} />
+          <Route path="/seller/login" element={<SellerLogin />} />
+          <Route path="/seller/dashboard" element={<SellerDashboard />} />
+          <Route path="/seller/products" element={<SellerProducts />} />
+          <Route path="/seller/add-product" element={<AddProduct />} />
         </Routes>
       <Footer />
     </>
