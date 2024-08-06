@@ -19,11 +19,18 @@ class ProductList(generics.ListCreateAPIView):
     # pagination_class = pagination.LimitOffsetPagination
 
     def get_queryset(self):
-        qs=super().get_queryset()
-        category = self.request.GET['category']
-        category = models.ProductCategory.objects.get(id=category)
-        qs=qs.filter(category=category)
+        qs = super().get_queryset()
+        category_id = self.request.GET.get('category')  # Safely get the 'category' parameter
+        
+        if category_id:
+            try:
+                category = models.ProductCategory.objects.get(id=category_id)
+                qs = qs.filter(category=category)
+            except models.ProductCategory.DoesNotExist:
+                qs = qs.none()  # Return an empty queryset if the category does not exist
+        
         return qs
+
 
 class ProductDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = models.Product.objects.all()

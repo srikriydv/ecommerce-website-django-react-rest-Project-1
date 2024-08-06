@@ -1,8 +1,35 @@
 import { Link } from "react-router-dom";
 import logo from "../asset/logo.avif";
 import SingleProduct from "./SingleProduct";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
-function ProductDetail(props) {
+function ProductDetail() {
+  const baseUrl = 'http://127.0.0.1:8000/api';
+  const [productData, setProductData] = useState({});
+  const [productImgs, setProductImgs] = useState([]);
+  const { product_id } = useParams();
+  console.log(product_id);
+
+  useEffect(() => {
+    console.log("useEffect triggered with product_id:", product_id);
+    fetchData(baseUrl + '/product/' + product_id);
+  }, [product_id]);
+
+
+  function fetchData(baseurl) {
+    console.log(baseurl);
+    fetch(baseurl) // api for the get request
+      .then(response => response.json())
+      .then((data) => {
+        console.log(data);
+        setProductData(data);
+        console.log(data.product_imgs);
+        setProductImgs(data.product_imgs);
+      })
+  }
+
+
   return (
     <>
       <section className="container mt-4">
@@ -10,23 +37,32 @@ function ProductDetail(props) {
           <div className="col-4">
             <div
               id="productThumbnailSlider"
-              className="carousel carousel-dark slide"
-              data-ride="carousel"
+              className="carousel carousel-dark slide carousel-fade"
+              data-bs-ride="true"
             >
+              <div className="carousel-indicators">
+                {productImgs.map((img, index) => {
+                  if (index === 0) {
+                    return <button type="button" data-bs-target="#productThumbnailSlider" data-bs-slide-to={index} className="active" aria-current="true" aria-label="Slide 1"></button>
+                  } else {
+                    return <button type="button" data-bs-target="#productThumbnailSlider" data-bs-slide-to={index} aria-current="true" aria-label="Slide 1"></button>
+                  }
+                })}
+              </div>
               <div className="carousel-inner">
-                <div className="carousel-item active">
-                  <img src={logo} className="d-block w-100 img-thumbnail" alt="First slide" />
-                </div>
-                <div className="carousel-item">
-                  <img
-                    src={logo}
-                    className="d-block w-100 img-thumbnail"
-                    alt="second slide"
-                  />
-                </div>
-                <div className="carousel-item">
-                  <img src={logo} className="d-block w-100 img-thumbnail" alt="third slide" />
-                </div>
+                {
+                  productImgs.map((img, index)=>{
+                    if(index===0){
+                      return <div className="carousel-item active">
+                        <img src={img.image} className="img-thumbnail mb-5" alt={index} />
+                      </div>
+                    }else{
+                      return <div className="carousel-item">
+                        <img src={img.image} className="img-thumbnail mb-5" alt={index} />
+                      </div>
+                    }
+                  })
+                }
               </div>
               <a
                 className="carousel-control-prev"
@@ -55,9 +91,9 @@ function ProductDetail(props) {
             </div>
           </div>
           <div className="col-8">
-            <h3>Product Title</h3>
-            <p>Product Description</p>
-            <h5 className="card-title">Price: Rs 500</h5>
+            <h3>{productData.title}</h3>
+            <p>{productData.detail}</p>
+            <h5 className="card-title">Price: Rs {productData.price}</h5>
             <p className="mt-3">
               <button title="Add to Cart" className="btn btn-success">
                 <i className="fa-solid fa-cart-shopping"></i> Add to Cart
@@ -89,7 +125,7 @@ function ProductDetail(props) {
 
         {/* Related Product */}
         <h3 className="mt-4 mb-2">Related Products</h3>
-        <div className="container">
+        {/* <div className="container">
           <div
             id="relatedProductsSlider"
             className="carousel carousel-dark slide"
@@ -146,7 +182,7 @@ function ProductDetail(props) {
               <span className="sr-only">Next</span>
             </a>
           </div>
-        </div>
+        </div> */}
       </section>
       {/* End Related Product */}
     </>

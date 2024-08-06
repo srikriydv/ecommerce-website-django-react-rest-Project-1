@@ -6,18 +6,22 @@ import SingleProduct from "./SingleProduct";
 function Home() {
   const products = [
     {
+      'id': 11,
       'title': 'Product 1',
       'price': 100
     },
     {
+      'id' : 12,
       'title': 'Product 2',
       'price': 200
     },
     {
+      'id' : 13,
       'title': 'Product 1',
       'price': 300
     },
     {
+      'id' : 14,
       'title': 'Product 1',
       'price': 400
     },
