@@ -1,27 +1,31 @@
 import { Link } from "react-router-dom";
 import SingleProduct from "./SingleProduct";
 import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
-function AllProducts() {
+function CategoryProducts() {
   const baseUrl = 'http://127.0.0.1:8000/api';
-  const [Products, setProducts] = useState([]);
+  const [products, setProducts] = useState([]);
   const [totalResults, setTotalResults] = useState([]);
-
+  const {category_slug, category_id} = useParams();
+  console.log(category_id);
+  console.log(category_slug);
   useEffect(() => {
-    fetchData(baseUrl + '/products');
+    fetchData(baseUrl + '/products/?category='+category_id);
   }, []);
 
   function fetchData(baseurl) {
     fetch(baseurl) // api for the get request
       .then(response => response.json())
       .then((data) => {
+        console.log(data.results);
         setProducts(data.results);
         setTotalResults(data.count);
       })
   }
 
-  function changeUrl(baseUrl) {
-    fetchData(baseUrl);
+  function changeUrl(newUrl) {
+    fetchData(newUrl);
   }
 
   var links = [];
@@ -30,8 +34,8 @@ function AllProducts() {
   for (let i = 1; i <= totalLinks; i++) {
     links.push(
       <li key={i} className="page-item">
-        <Link onClick={() => changeUrl(baseUrl + `/products/?page=${i}`)}
-          to={`/products/?page=${i}`} className="page-link">
+        <Link onClick={() => changeUrl(baseUrl + `/products/?category=${category_id}&page=${i}`)}
+          to={`/category/${category_slug}/${category_id}/?page=${i}`} className="page-link">
           {i}
         </Link>
       </li>
@@ -45,7 +49,7 @@ function AllProducts() {
       </h3>
       <div className="row mb-4">
         {
-          Products.map((product) => <SingleProduct product={product} />)
+          products.map((product) => <SingleProduct product={product} />)
         }
       </div>
       <nav aria-label="Page navigation example" className="mt-4">
@@ -58,4 +62,4 @@ function AllProducts() {
     </section>
   );
 }
-export default AllProducts;
+export default CategoryProducts;
