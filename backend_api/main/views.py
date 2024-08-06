@@ -59,11 +59,11 @@ class ProductRatingViewset(viewsets.ModelViewSet):
     queryset = models.ProductRating.objects.all()
 
 # Catagory View
-class CatagoryList(generics.ListCreateAPIView):
-    queryset = models.ProductCatagory.objects.all()
-    serializer_class = serializers.CatagorySerializer
+class CategoryList(generics.ListCreateAPIView):
+    queryset = models.ProductCategory.objects.all()
+    serializer_class = serializers.CategorySerializer
     # permission_classes = [permissions.IsAuthenticated]
 
-class CatagoryDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = models.ProductCatagory.objects.all()
-    serializer_class = serializers.CatagoryDetailSerializer
+class CategoryDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = models.ProductCategory.objects.all()
+    serializer_class = serializers.CategoryDetailSerializer
