@@ -8,6 +8,7 @@ function ProductDetail() {
   const baseUrl = 'http://127.0.0.1:8000/api';
   const [productData, setProductData] = useState({});
   const [productImgs, setProductImgs] = useState([]);
+  const [productTags, setProductTags] = useState([]);
   const { product_id } = useParams();
   console.log(product_id);
 
@@ -26,8 +27,21 @@ function ProductDetail() {
         setProductData(data);
         console.log(data.product_imgs);
         setProductImgs(data.product_imgs);
+        setProductTags(data.tag_list);
+        console.log("product tag", productTags);
       })
   }
+
+  const tagLinks=[]
+  for(let i=0; i<productTags.length; i++){
+    console.log("product tag", productTags);
+    let tag=productTags[i].trim();
+    console.log("tag", tag);
+    tagLinks.push(<Link className="badge bg-secondary text-white me-1" to={`/products/${tag}`}>{tag}</Link>);
+    console.log("tagLinks", tagLinks);
+  }
+
+
 
 
   return (
@@ -109,15 +123,7 @@ function ProductDetail() {
             <div className="producttags">
               <h5 className="mt-3">Tags</h5>
               <p>
-                <Link to="#" className="badge bg-secondary text-white me-1">
-                  python
-                </Link>
-                <Link to="#" className="badge bg-secondary text-white me-1">
-                  django
-                </Link>
-                <Link to="#" className="badge bg-secondary text-white me-1">
-                  GoLang
-                </Link>
+                {tagLinks}
               </p>
             </div>
           </div>

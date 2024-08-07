@@ -31,6 +31,17 @@ class ProductList(generics.ListCreateAPIView):
         
         return qs
 
+class TagProductList(generics.ListCreateAPIView):
+    queryset = models.Product.objects.all()
+    serializer_class = serializers.ProductListSerializer
+    # pagination_class = pagination.LimitOffsetPagination
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        tag = self.kwargs['tag']
+        qs = qs.filter(tags__icontains=tag)
+        return qs
+
 
 class ProductDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = models.Product.objects.all()

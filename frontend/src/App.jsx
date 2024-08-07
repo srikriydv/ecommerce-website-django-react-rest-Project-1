@@ -6,6 +6,7 @@ import Home from "./components/Home.jsx";
 import Footer from "./components/Footer.jsx";
 import Categories from "./components/Categories.jsx";
 import CategoryProducts from "./components/CategoryProducts.jsx";
+import TagProducts from "./components/TagProducts.jsx";
 import AllProducts from "./components/AllProducts.jsx";
 import ProductDetail from "./components/ProductDetail.jsx";
 import Checkout from "./components/Checkout.jsx";
@@ -43,6 +44,7 @@ function App() {
           <Route path="/categories" element={<Categories />} />
           <Route path="/category/:category_slug/:category_id" element={<CategoryProducts />} />
           <Route path="/products" element={<AllProducts />} />
+          <Route path="/products/:tag" element={<TagProducts />} />
           <Route path="/product/:product_slug/:product_id" element={<ProductDetail />} />
           <Route path="/checkout" element={<Checkout/>} />
           <Route path="/order/success" element={<OrderSuccess />} />
