@@ -25,9 +25,8 @@ function ProductDetail() {
     fetch(baseurl) // api for the get request
       .then(response => response.json())
       .then((data) => {
-        console.log("data for fetdata", data);
         setProductData(data);
-        console.log("product image data", data.product_imgs);
+        console.log("demo url", data.demo_url);
         setProductImgs(data.product_imgs);
         setProductTags(data.tag_list);
         console.log("product tag", productTags);
@@ -120,9 +119,13 @@ function ProductDetail() {
           <div className="col-8">
             <h3>{productData.title}</h3>
             <p>{productData.detail}</p>
-            <h5 className="card-title">Price: Rs {productData.price}</h5>
+            <h5 className="card-title">Price: Rs {productData.price}
+            </h5>
             <p className="mt-3">
-              <button title="Add to Cart" className="btn btn-success">
+              <a title="Demo" href={productData.demo_url} className="btn btn-dark">
+                <i className="fa-solid fa-cart-shopping"></i> Demo
+              </a>
+              <button title="Add to Cart" className="btn btn-success ms-1">
                 <i className="fa-solid fa-cart-shopping"></i> Add to Cart
               </button>
               <button title="Buy Now" className="btn btn-primary ms-1">
