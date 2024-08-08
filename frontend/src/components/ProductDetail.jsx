@@ -9,12 +9,14 @@ function ProductDetail() {
   const [productData, setProductData] = useState({});
   const [productImgs, setProductImgs] = useState([]);
   const [productTags, setProductTags] = useState([]);
+  const [relatedProducts, setRelatedProducts] = useState([]);
   const { product_id } = useParams();
-  console.log(product_id);
+  console.log("product id", product_id);
 
   useEffect(() => {
     console.log("useEffect triggered with product_id:", product_id);
     fetchData(baseUrl + '/product/' + product_id);
+    fetchRelatedData(baseUrl + '/related-products/' + product_id)
   }, [product_id]);
 
 
@@ -23,19 +25,30 @@ function ProductDetail() {
     fetch(baseurl) // api for the get request
       .then(response => response.json())
       .then((data) => {
-        console.log(data);
+        console.log("data for fetdata", data);
         setProductData(data);
-        console.log(data.product_imgs);
+        console.log("product image data", data.product_imgs);
         setProductImgs(data.product_imgs);
         setProductTags(data.tag_list);
         console.log("product tag", productTags);
       })
   }
 
-  const tagLinks=[]
-  for(let i=0; i<productTags.length; i++){
+  function fetchRelatedData(baseurl) {
+    console.log(baseurl);
+    fetch(baseurl) // api for the get request
+      .then(response => response.json())
+      .then((data) => {
+        setRelatedProducts(data.results)
+        console.log("fetrelated product", relatedProducts);
+        console.log("related product count", data.count);
+      })
+  }
+
+  const tagLinks = [];
+  for (let i = 0; i < productTags.length; i++) {
     console.log("product tag", productTags);
-    let tag=productTags[i].trim();
+    let tag = productTags[i].trim();
     console.log("tag", tag);
     tagLinks.push(<Link className="badge bg-secondary text-white me-1" to={`/products/${tag}`}>{tag}</Link>);
     console.log("tagLinks", tagLinks);
@@ -65,12 +78,12 @@ function ProductDetail() {
               </div>
               <div className="carousel-inner">
                 {
-                  productImgs.map((img, index)=>{
-                    if(index===0){
+                  productImgs.map((img, index) => {
+                    if (index === 0) {
                       return <div className="carousel-item active">
                         <img src={img.image} className="img-thumbnail mb-5" alt={index} />
                       </div>
-                    }else{
+                    } else {
                       return <div className="carousel-item">
                         <img src={img.image} className="img-thumbnail mb-5" alt={index} />
                       </div>
@@ -130,65 +143,39 @@ function ProductDetail() {
         </div>
 
         {/* Related Product */}
-        <h3 className="mt-4 mb-2">Related Products</h3>
-        {/* <div className="container">
-          <div
-            id="relatedProductsSlider"
-            className="carousel carousel-dark slide"
-            data-bs-ride="carousel"
-          >
-            <div className="carousel-inner">
-              <div className="carousel-item active">
-                <div className="row mb-5">
-                  <SingleProduct title="Django Project" />
-                  <SingleProduct title="Django Project" />
-                  <SingleProduct title="PHP Project" />
-                  <SingleProduct title="React Project" />
-                </div>
-              </div>
-              <div className="carousel-item">
-                <div className="row mb-5">
-                  <SingleProduct title="Django Project" />
-                  <SingleProduct title="Django Project" />
-                  <SingleProduct title="PHP Project" />
-                  <SingleProduct title="React Project" />
-                </div>
-              </div>
-              <div className="carousel-item">
-                <div className="row mb-5">
-                  <SingleProduct title="Django Project" />
-                  <SingleProduct title="Django Project" />
-                  <SingleProduct title="PHP Project" />
-                  <SingleProduct title="React Project" />
-                </div>
-              </div>
+        <h3 className="mt-4 mb-2 text-center">Related Products</h3>
+        <div className="container">
+          <div id="relatedProductsSlider" className="carousel carousel-dark slide" data-bs-ride="carousel">
+
+            {/* Carousel Indicators */}
+            <div className="carousel-indicators">
+              {relatedProducts.map((product, index) => (
+                <button
+                  key={index}  // Added key to avoid React warnings
+                  type="button"
+                  data-bs-target="#relatedProductsSlider"
+                  data-bs-slide-to={index}
+                  className={index === 0 ? "active" : ""}  // Used a conditional statement to assign "active" class to the first item
+                  aria-current={index === 0 ? "true" : undefined}  // Adjusted aria-current only for the active slide
+                  aria-label={`Slide ${index + 1}`}  // Corrected aria-label to reflect the correct slide number
+                ></button>
+              ))}
             </div>
-            <a
-              className="carousel-control-prev"
-              href="#relatedProductsSlider"
-              role="button"
-              data-slide="prev"
-            >
-              <span
-                className="carousel-control-prev-icon"
-                aria-hidden="true"
-              ></span>
-              <span className="sr-only">Previous</span>
-            </a>
-            <a
-              className="carousel-control-next"
-              href="#relatedProductsSlider"
-              role="button"
-              data-slide="next"
-            >
-              <span
-                className="carousel-control-next-icon"
-                aria-hidden="true"
-              ></span>
-              <span className="sr-only">Next</span>
-            </a>
+
+            {/* Carousel Items */}
+            <div className="carousel-inner">
+              {relatedProducts.map((product, index) => (
+                <div
+                  key={index}  // Added key for unique identification
+                  className={`carousel-item ${index === 0 ? "active" : ""}`}  // Conditional class for "active"
+                >
+                  <SingleProduct product={product} />
+                </div>
+              ))}
+            </div>
           </div>
-        </div> */}
+        </div>
+
       </section>
       {/* End Related Product */}
     </>

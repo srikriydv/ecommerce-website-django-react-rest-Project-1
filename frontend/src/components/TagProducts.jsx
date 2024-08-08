@@ -20,6 +20,7 @@ function TagProducts() {
         console.log(data.results);
         setProducts(data.results);
         setTotalResults(data.count);
+        console.log("total tag count", totalResults);
       })
   }
 
@@ -28,8 +29,9 @@ function TagProducts() {
   }
 
   var links = [];
-  var limit = 1;
-  var totalLinks = totalResults / limit;
+  var limit = 2;
+  var totalLinks = Math.ceil(totalResults / limit);
+  console.log("total link count is 2 or not", totalLinks);
   for (let i = 1; i <= totalLinks; i++) {
     links.push(
       <li key={i} className="page-item">

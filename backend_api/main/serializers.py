@@ -26,7 +26,7 @@ class ProductListSerializer(serializers.ModelSerializer):
     product_ratings = serializers.StringRelatedField(many=True, read_only=True)
     class Meta:
         model = models.Product
-        fields = ['id', 'category', 'vendor', 'title', 'slug', 'tag_list', 'detail', 'price', 'product_ratings']
+        fields = ['id', 'category', 'vendor', 'title', 'slug', 'tag_list', 'detail', 'image', 'price', 'product_ratings']
         depth = 1
 
     def __init__(self, *args, **kwargs):
