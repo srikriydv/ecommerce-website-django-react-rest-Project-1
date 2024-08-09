@@ -29,7 +29,7 @@ function Login(props) {
                     setErrorMsg(response.data.msg); 
                 }else{
                     localStorage.setItem('customer_login',true);
-                    localStorage.setItem('customer_username', response.data.username);
+                    localStorage.setItem('customer_username', response.data.user);
                     setFormError(false);
                     setErrorMsg('');
                 }

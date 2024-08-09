@@ -4,6 +4,7 @@ from . import models
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from django.contrib.auth import authenticate
+from django.contrib.auth.models import User
 
 # Vender View
 class VendorList(generics.ListCreateAPIView):
@@ -86,6 +87,41 @@ def customer_login(request):
         msg={
             'bool':False,
             'msg':'Invalid Username/Password!!'
+        }
+    return JsonResponse(msg)
+
+@csrf_exempt
+def customer_register(request):
+    first_name = request.POST.get('first_name')
+    last_name = request.POST.get('last_name')
+    username = request.POST.get('username')
+    email = request.POST.get('email')
+    mobile = request.POST.get('mobile')
+    if not mobile:
+        return JsonResponse({'error': 'Mobile number is required'}, status=400)
+    password = request.POST.get('password')
+    user = User.objects.create(
+        first_name=first_name,
+        last_name=last_name,
+        username=username,
+        email=email,
+        password=password,
+    )
+    if user:
+        customer=models.Customer.objects.create(
+            user=user,
+            mobile=mobile
+        )
+        msg={
+            'bool':True,
+            'user':user.id,
+            'customer':customer.id,
+            'msg':'Thank you for your registration. You can login now',
+        }
+    else:
+        msg={
+            'bool':False,
+            'msg':'Oops something wrong!!'
         }
     return JsonResponse(msg)
 

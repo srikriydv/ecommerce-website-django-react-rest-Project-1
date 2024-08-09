@@ -13,6 +13,7 @@ import Checkout from "./components/Checkout.jsx";
 // Customer Panel
 import Register from "./components/Customer/Register.jsx";
 import Login from "./components/Customer/Login.jsx";
+import CustomerLogout from "./components/Customer/CustomerLogout.jsx";
 import Dashboard from "./components/Customer/Dashboard.jsx";
 import Orders from "./components/Customer/Orders.jsx";
 import OrderSuccess from "./components/OrderSuccess.jsx";
@@ -52,6 +53,7 @@ function App() {
           {/* customer routes */}
           <Route path="/customer/register" element={<Register/>} />
           <Route path="/customer/login" element={<Login/>} />
+          <Route path="/customer/logout" element={<CustomerLogout/>} />
           <Route path="/customer/dashboard" element={<Dashboard />} />
           <Route path="/customer/orders" element={<Orders />} />
           <Route path="/customer/wishlist" element={<Wishlist />} />
