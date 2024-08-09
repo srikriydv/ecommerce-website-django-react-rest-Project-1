@@ -1,6 +1,9 @@
 from . import serializers
 from rest_framework import generics, permissions, pagination, viewsets
 from . import models
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
+from django.contrib.auth import authenticate
 
 # Vender View
 class VendorList(generics.ListCreateAPIView):
@@ -68,6 +71,23 @@ class CustomerList(generics.ListCreateAPIView):
 class CustomerDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = models.Customer.objects.all()
     serializer_class = serializers.CustomerDetailSerializer
+
+@csrf_exempt
+def customer_login(request):
+    username = request.POST.get('username')
+    password = request.POST.get('password')
+    user = authenticate(username=username, password=password)
+    if user:
+        msg={
+            'bool':True,
+            'user':user.username
+        }
+    else:
+        msg={
+            'bool':False,
+            'msg':'Invalid Username/Password!!'
+        }
+    return JsonResponse(msg)
 
 # Order View
 class OrderList(generics.ListCreateAPIView):
