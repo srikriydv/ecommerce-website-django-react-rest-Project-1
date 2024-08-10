@@ -1,10 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { UserContext } from "../Context";
+import { useContext } from "react";
 
 function Header() {
   const linkStyle = {
     fontSize: "40px",
   };
+  const userContext = useContext(UserContext)
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-dark bg-success">
@@ -40,11 +43,17 @@ function Header() {
                   My Account
                 </a>
                 <ul className="dropdown-menu">
-                  <li><Link className="dropdown-item" to="/customer/login">Login</Link></li>
-                  <li><Link className="dropdown-item" to="/customer/register">Register</Link></li>
-                  <li><hr className="dropdown-divider" /></li>
-                  <li><Link className="dropdown-item" to="/customer/dashboard">Dashboard</Link></li>
-                  <li><Link className="dropdown-item" to="/customer/logout">logout</Link></li>
+                  {userContext != 'true' &&
+                    <>
+                      <li><Link className="dropdown-item" to="/customer/login">Login</Link></li>
+                      <li><Link className="dropdown-item" to="/customer/register">Register</Link></li>
+                    </>}
+                  {userContext == 'true' &&
+                    <>
+                      <li><Link className="dropdown-item" to="/customer/dashboard">Dashboard</Link></li>
+                      <li><Link className="dropdown-item" to="/customer/logout">logout</Link></li>
+                    </>
+                  }
                 </ul>
               </li>
               <li className="nav-item dropdown">

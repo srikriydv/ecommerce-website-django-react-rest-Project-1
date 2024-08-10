@@ -35,15 +35,25 @@ function Register(props) {
         axios.post(baseUrl + 'customer/register/', formData)
             .then(function (response) {
                 if(response.data.bool==false){
-                    setFormError(true);
+                    console.log(response.data.msg);
                     setErrorMsg(response.data.msg); 
+                    setSuccessMsg('');
                 }else{
-                    setFormError(false);
+                    setRegisterFormData({
+                        "first_name": '',
+                        "last_name": '',
+                        "username": '',
+                        "email":'',
+                        "mobile":'',
+                        "password": '',
+                    })
+                    setErrorMsg('');
                     setSuccessMsg(response.data.msg);
                 }
             })
             .catch(function (error) {
-                console.log(error);
+                console.log(error.response.data.msg, error.response.data.bool)
+                setErrorMsg(error.response.data.msg);
             });
     }
 
@@ -60,10 +70,11 @@ function Register(props) {
                             <h4 className="card-header">Register</h4>
                             <div className="card-body">
                             <p className='text-muted'>< strong className='text-secondary'>Note: </strong>All Fields are Required</p>
-                            {successMsg && <p>{successMsg}</p>}
+                            {successMsg && <p className='text-success'>{successMsg}</p>}
+                            {errorMsg && <p className='text-danger'>{errorMsg}</p>}
                                 <form>
                                     <div className="mb-3">
-                                        <label for="firstName" className="form-label">User Name</label>
+                                        <label for="firstName" className="form-label">First Name</label>
                                         <input type="text" name='first_name' onChange={inputHandler} value={registerFormData.first_name} className="form-control" id="username" />
                                     </div>
                                     <div className="mb-3">

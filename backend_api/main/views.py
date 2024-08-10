@@ -5,6 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
+from django.db import IntegrityError
 
 # Vender View
 class VendorList(generics.ListCreateAPIView):
@@ -77,6 +78,7 @@ class CustomerDetail(generics.RetrieveUpdateDestroyAPIView):
 def customer_login(request):
     username = request.POST.get('username')
     password = request.POST.get('password')
+    print(f"Attempting to authenticate user: {username}")
     user = authenticate(username=username, password=password)
     if user:
         msg={
@@ -100,29 +102,48 @@ def customer_register(request):
     if not mobile:
         return JsonResponse({'error': 'Mobile number is required'}, status=400)
     password = request.POST.get('password')
-    user = User.objects.create(
-        first_name=first_name,
-        last_name=last_name,
-        username=username,
-        email=email,
-        password=password,
-    )
-    if user:
-        customer=models.Customer.objects.create(
-            user=user,
-            mobile=mobile
+    if models.Customer.objects.filter(mobile=mobile).exists():
+        return JsonResponse({
+            'bool': False,
+            'msg': 'Mobile already exists!!'
+        }, status=400)
+    try:
+        user = User.objects.create(
+            first_name=first_name,
+            last_name=last_name,
+            username=username,
+            email=email,
+            password=password,
         )
+        user.set_password(password)
+        user.save()
+        if user:
+            try:
+                customer=models.Customer.objects.create(
+                    user=user,
+                    mobile=mobile
+                )
+                msg={
+                    'bool':True,
+                    'user':user.id,
+                    'customer':customer.id,
+                    'msg':'Thank you for your registration. You can login now',
+                }
+            except IntegrityError:
+                msg={
+                'bool':False,
+                'msg':'Mobile already exist!!'
+            }
+        else:
+            msg={
+                'bool':False,
+                'msg':'Oops something wrong!!'
+            }
+    except IntegrityError:
         msg={
-            'bool':True,
-            'user':user.id,
-            'customer':customer.id,
-            'msg':'Thank you for your registration. You can login now',
-        }
-    else:
-        msg={
-            'bool':False,
-            'msg':'Oops something wrong!!'
-        }
+                'bool':False,
+                'msg':'Username already exist!!'
+            }
     return JsonResponse(msg)
 
 # Order View
