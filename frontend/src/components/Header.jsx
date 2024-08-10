@@ -1,13 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { UserContext } from "../Context";
+import { UserContext, CartContext } from "../Context";
 import { useContext } from "react";
 
 function Header() {
   const linkStyle = {
     fontSize: "40px",
   };
-  const userContext = useContext(UserContext)
+  const userContext = useContext(UserContext);
+  const {cartData, setCartData} = useContext(CartContext);
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-dark bg-success">
@@ -75,7 +76,7 @@ function Header() {
               </li>
               <li className="nav-item">
                 <Link className="nav-link" to="/checkout">
-                  My Cart (4)
+                  My Cart ({cartData.length})
                 </Link>
               </li>
             </ul>

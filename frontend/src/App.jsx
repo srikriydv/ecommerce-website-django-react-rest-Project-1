@@ -35,10 +35,15 @@ import Reports from "./components/seller/Reports.jsx";
 import VendorProfile from "./components/seller/VendorProfile.jsx";
 import VendorChangePassword from "./components/seller/VendorChangePassword.jsx";
 
+import { CartContext } from "./Context.jsx";
+const checkCart = localStorage.getItem('cartData') || '[]';
+console.log("checkkart vvalur",checkCart);
 function App() {
   const [count, setCount] = useState(0);
+  const [cartData, setCartData] = useState(JSON.parse(checkCart));
   return (
     <>
+    <CartContext.Provider value={{cartData, setCartData}} >
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
@@ -74,6 +79,7 @@ function App() {
           <Route path="/seller/change-password" element={<VendorChangePassword />} />
         </Routes>
       <Footer />
+      </CartContext.Provider>
     </>
   );
 }
