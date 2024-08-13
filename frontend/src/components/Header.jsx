@@ -9,6 +9,11 @@ function Header() {
   };
   const userContext = useContext(UserContext);
   const {cartData, setCartData} = useContext(CartContext);
+  if(cartData == null){
+    var cartItems = 0;
+  }else{
+    var cartItems = cartData.length;
+  }
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-dark bg-success">
@@ -76,7 +81,7 @@ function Header() {
               </li>
               <li className="nav-item">
                 <Link className="nav-link" to="/checkout">
-                  My Cart ({cartData.length})
+                  My Cart ({cartItems})
                 </Link>
               </li>
             </ul>
