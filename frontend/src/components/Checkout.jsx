@@ -29,7 +29,7 @@ function Checkout(props) {
             <h3 className="mb-4">All Items ({cartItems})</h3>
             {cartItems !== 0 ? (
                 <div className="row">
-                    <div className="col-md-8 col-12">
+                    <div className="col-12">
                         <div className="table-responsive">
                             <table className="table table-bordered">
                                 <thead>
@@ -75,7 +75,7 @@ function Checkout(props) {
                                     <tr>
                                         <td colSpan='4' align="right">
                                             <Link to="/categories" className="btn btn-secondary me-2">Continue Shopping</Link>
-                                            <Link className="btn btn-success">Proceed to Payment</Link>
+                                            <Link to="/confirm-order" className="btn btn-success">Proceed to Payment</Link>
                                         </td>
                                     </tr>
                                 </tfoot>

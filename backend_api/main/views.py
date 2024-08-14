@@ -81,7 +81,9 @@ def customer_login(request):
     print(f"Attempting to authenticate user: {username}")
     user = authenticate(username=username, password=password)
     if user:
+        customer = models.Customer.objects.get(user=user)
         msg={
+            'id':customer.id,
             'bool':True,
             'user':user.username
         }
@@ -151,6 +153,22 @@ class OrderList(generics.ListCreateAPIView):
     queryset = models.Order.objects.all()
     serializer_class = serializers.OrderSerializer
     # permission_classes = [permissions.IsAuthenticated]
+
+    def perform_create(self, serializer):
+        # Log incoming data for debugging
+        print("Incoming data:", self.request.data)
+        
+        # Use customer_id from the request data
+        customer_id = self.request.data.get('customer')
+        
+        # Save the new order with the provided customer
+        serializer.save(customer_id=customer_id)
+
+class OrderItemList(generics.ListCreateAPIView):
+    queryset = models.OrderItems.objects.all()
+    serializer_class = serializers.OrderItemSerializer
+    # permission_classes = [permissions.IsAuthenticated]
+
 
 class OrderDetail(generics.ListAPIView):
     # queryset = models.OrderItems.objects.all()

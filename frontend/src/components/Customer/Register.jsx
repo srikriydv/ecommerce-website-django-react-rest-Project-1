@@ -31,6 +31,7 @@ function Register(props) {
         formData.append('email', registerFormData.email);
         formData.append('mobile', registerFormData.mobile);
         formData.append('password', registerFormData.password);
+        console.log(formData);
         // Submit Data
         axios.post(baseUrl + 'customer/register/', formData)
             .then(function (response) {
