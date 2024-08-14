@@ -1,18 +1,23 @@
 import { UserContext, CartContext } from "../Context";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import axios from "axios";
 
 const baseUrl = 'http://127.0.0.1:8000/api/';
 
 function ConfirmOrder() {
     const userContext = useContext(UserContext);
-    const {cartData, SetCartData} = useContext(CartContext);
+    const [confirmOrder, setConfirmOrder] = useState(false);
+    const [orderId, setOrderId] = useState('');
+    const [payMethod, setPayMethod] = useState('');
+    const { cartData, setCartData } = useContext(CartContext);
     console.log("usercontext =", userContext);
     if(userContext==null){
         window.location.href='/customer/login'
     }else{  
         console.log("usercontext", userContext);
-        addOrderInTable();
+        if(confirmOrder==false){
+            addOrderInTable();
+        }
     }
 
     function addOrderInTable(){
@@ -26,7 +31,10 @@ function ConfirmOrder() {
         .then(function (response) {
             console.log("response of addOrderInTable",response.data);
             var orderId = response.data.id;
+            setOrderId(orderId);
             orderItems(orderId);
+            console.log("confirmoder value true or false",confirmOrder);
+            setConfirmOrder(true);
         })
         .catch(function (error) {
             // console.log(error);
@@ -40,7 +48,6 @@ function ConfirmOrder() {
 
         if(cartJson!=null){
             cartJson.map((cart, index)=>{
-                const updatedCart = [...cartJson];
                 const formData = new FormData();
                 formData.append('order', orderId);
                 formData.append('product', cart.product.id);
@@ -53,6 +60,7 @@ function ConfirmOrder() {
                     // Remove Cart Items
                     cartJson.splice(index, 1);
                     localStorage.setItem('cartData', JSON.stringify(cartJson));
+                    setCartData(cartJson);
                     
                 })
                 .catch(function (error) {
@@ -60,20 +68,51 @@ function ConfirmOrder() {
                 });
                 
             });
-            // Update localStorage and state after all items are processed
-            localStorage.setItem('cartData', JSON.stringify(updatedCart));
-            SetCartData(updatedCart);
-            console.log("cartData after updating", cartData)
         }
-
-
-
+    }
+    
+    function changePaymentMethod(payMethod){
+        setPayMethod(payMethod);
+    }
+    function PayNowButton(){
+        if(payMethod!=''){
+            changePaymentMethod(payMethod);
+        }else{
+            alert('Select Payment Method');
+        }
     }
 
     return (
-        <>
-            <h1 className="text-center">your order is confirmed</h1>
-        </>
+        <div className="container">
+            <div className="row mt-5">
+                <div className="col-6 offset-3">
+                    <div className="card py-3 text-center">
+                        <h3><i className="fa fa-check-circle text-success"></i> Your Order has been confirmed</h3>
+                        <h5>ORDER ID: {orderId}</h5>
+                    </div>
+                    <div className="card p-3 mt-3">
+                        <form>
+                            <div className="form-group">
+                                <label>
+                                    <input type="radio" onChange={()=>changePaymentMethod('paypal')} name='payMethod' /> Paypal
+                                </label>
+                            </div>
+                            <div className="form-group">
+                                <label>
+                                    <input type="radio" onChange={()=>changePaymentMethod('stripe')} name='payMethod' /> Stripe
+                                </label>
+                            </div>
+                            <div className="form-group">
+                                <label>
+                                    <input type="radio" onChange={()=>changePaymentMethod('razorpay')} name='payMethod' /> RazorPay
+                                </label>
+                            </div>
+                            <button type="button" onClick={PayNowButton} className="btn btn-sm btn-success">Next</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     )
 }
 
