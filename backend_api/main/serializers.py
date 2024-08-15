@@ -80,6 +80,15 @@ class OrderSerializer(serializers.ModelSerializer):
         self.Meta.depth = 1
 
 class OrderItemSerializer(serializers.ModelSerializer):
+    # order = OrderSerializer()
+    # product = ProductDetailSerializer()
+    class Meta:
+        model = models.OrderItems
+        fields = ['id', 'order', 'product', 'qty', 'price']
+
+class CustomOrderItemSerializer(serializers.ModelSerializer):
+    order = OrderSerializer()
+    product = ProductDetailSerializer()
     class Meta:
         model = models.OrderItems
         fields = ['id', 'order', 'product', 'qty', 'price']

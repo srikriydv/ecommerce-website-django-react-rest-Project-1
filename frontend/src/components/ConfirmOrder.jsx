@@ -91,6 +91,8 @@ function ConfirmOrder() {
         axios.post(baseUrl + 'update-order-status/'+ orderId)
             .then(function (response) {
                 console.log(response);
+                alert('Your payment is successful');
+                window.location.href='/customer/orders';
             })
             .catch(function (error) {
                 // console.log(error);

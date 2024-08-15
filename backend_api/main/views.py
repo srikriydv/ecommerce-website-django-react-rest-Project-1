@@ -169,6 +169,17 @@ class OrderItemList(generics.ListCreateAPIView):
     serializer_class = serializers.OrderItemSerializer
     # permission_classes = [permissions.IsAuthenticated]
 
+class CustomerOrderItemList(generics.ListAPIView):
+    queryset = models.OrderItems.objects.all()
+    serializer_class = serializers.CustomOrderItemSerializer
+    # permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        customer_id = self.kwargs['pk']
+ 
+        return qs
+
 
 class OrderDetail(generics.ListAPIView):
     # queryset = models.OrderItems.objects.all()

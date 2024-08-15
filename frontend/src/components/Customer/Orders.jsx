@@ -1,9 +1,26 @@
 import Sidebar from "./Sidebar";
-import logo from "../../asset/logo.avif"
+import logo from "../../asset/logo.avif";
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 function Orders() {
+    const baseUrl = "http://127.0.0.1:8000/api/";
+    const [orderItems, setOrderItems] = useState([]);
+    const customerId = localStorage.getItem("customer_id");
 
+    useEffect(() => {
+        fetchData(baseUrl + "customer/" + customerId + "/orderitems");
+    }, []);
+
+    function fetchData(baseUrl) {
+        fetch(baseUrl) // api for the get request
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data);
+                setOrderItems(data.results);
+                console.log(orderItems);
+            });
+    }
 
     return (
         <>
@@ -17,7 +34,7 @@ function Orders() {
                         <div className="row">
                             <div className="table-responsive">
                                 <table className="table table-bordered">
-                                    <thead>
+                                    <thead className="text-center">
                                         <tr>
                                             <th>#</th>
                                             <th>Product</th>
@@ -27,37 +44,51 @@ function Orders() {
                                             <th>Action</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>
-                                                <Link><img src={logo} className="img-thumbnail" width={70} alt="" /></Link>
-                                            </td>
-                                            <td><Link>Django</Link></td>
-                                            <td>Rs 500</td>
-                                            <td><span className="text-success"><i className="fa-solid fa-circle-check"></i> Completed</span></td>
-                                            <td><button className="btn btn-primary btn-sm">Download</button></td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>
-                                                <Link><img src={logo} className="img-thumbnail" width={70} alt="" /></Link>
-                                            </td>
-                                            <td><Link>PHP</Link></td>
-                                            <td>Rs 800</td>
-                                            <td><span className="text-danger"><i className="fa-solid fa-circle-xmark"></i> Cancelled</span></td>                                       
-                                            <td></td>
-                                            </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>
-                                                <Link><img src={logo} className="img-thumbnail" width={70} alt="" /></Link>
-                                            </td>
-                                            <td><Link>Flask</Link></td>
-                                            <td>Rs 900</td>
-                                            <td><span className="text-secondary"><i className="fa fa-spin fa-spinner"></i> Processing</span></td>
-                                            <td></td>
-                                        </tr>
+                                    <tbody className="text-center">
+                                        {orderItems.map((item, index) => {
+                                            return (
+                                                <tr>
+                                                    <td>{index + 1}</td>
+                                                    <td>
+                                                        <Link
+                                                            to={`/product/${item.product.slug}/${item.product.id}`}
+                                                        >
+                                                            <img
+                                                                src={item.product.image}
+                                                                className="img-thumbnail"
+                                                                width={70}
+                                                                alt=""
+                                                            />
+                                                        </Link>
+                                                    </td>
+                                                    <td>
+                                                        <Link
+                                                            to={`/product/${item.product.slug}/${item.product.id}`}
+                                                        >
+                                                            {item.product.title}
+                                                        </Link>
+                                                    </td>
+                                                    <td>Rs {item.product.price}</td>
+                                                    <td>
+                                                        <span>
+                                                            {item.order.order_status == true && (
+                                                                <i className="fa-solid fa-circle-check text-success"></i>
+                                                            )}
+                                                            {item.order.order_status == false && (
+                                                                <i className="fa-solid fa-circle-check text-dark"></i>
+                                                            )}
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        {item.order.order_status == true && (
+                                                            <a href="#" className="btn btn-primary btn-sm">
+                                                                Download
+                                                            </a>
+                                                        )}
+                                                    </td>
+                                                </tr>
+                                            );
+                                        })}
                                     </tbody>
                                 </table>
                             </div>
@@ -66,7 +97,7 @@ function Orders() {
                 </div>
             </div>
         </>
-    )
+    );
 }
 
 export default Orders;
