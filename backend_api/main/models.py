@@ -52,6 +52,7 @@ class Customer(models.Model):
 class Order(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     order_time = models.DateTimeField(auto_now_add=True)
+    order_status = models.BooleanField(default=False)
 
     def __str__(self):
         return f"Order {self.id} by {self.customer.user.username}"
