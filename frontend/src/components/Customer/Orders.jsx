@@ -47,7 +47,7 @@ function Orders() {
                                     <tbody className="text-center">
                                         {orderItems.map((item, index) => {
                                             return (
-                                                <tr>
+                                                <tr key={index}>
                                                     <td>{index + 1}</td>
                                                     <td>
                                                         <Link
@@ -81,7 +81,7 @@ function Orders() {
                                                     </td>
                                                     <td>
                                                         {item.order.order_status == true && (
-                                                            <a href="#" className="btn btn-primary btn-sm">
+                                                            <a target="_blank" download href={item.product.product_file} className="btn btn-primary btn-sm">
                                                                 Download
                                                             </a>
                                                         )}
