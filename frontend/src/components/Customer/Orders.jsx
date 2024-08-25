@@ -2,6 +2,7 @@ import Sidebar from "./Sidebar";
 import logo from "../../asset/logo.avif";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import OrderRow from "./OrderRow";
 
 function Orders() {
     const baseUrl = "http://127.0.0.1:8000/api/";
@@ -46,48 +47,7 @@ function Orders() {
                                     </thead>
                                     <tbody className="text-center">
                                         {orderItems.map((item, index) => {
-                                            return (
-                                                <tr key={index}>
-                                                    <td>{index + 1}</td>
-                                                    <td>
-                                                        <Link
-                                                            to={`/product/${item.product.slug}/${item.product.id}`}
-                                                        >
-                                                            <img
-                                                                src={item.product.image}
-                                                                className="img-thumbnail"
-                                                                width={70}
-                                                                alt=""
-                                                            />
-                                                        </Link>
-                                                    </td>
-                                                    <td>
-                                                        <Link
-                                                            to={`/product/${item.product.slug}/${item.product.id}`}
-                                                        >
-                                                            {item.product.title}
-                                                        </Link>
-                                                    </td>
-                                                    <td>Rs {item.product.price}</td>
-                                                    <td>
-                                                        <span>
-                                                            {item.order.order_status == true && (
-                                                                <i className="fa-solid fa-circle-check text-success"></i>
-                                                            )}
-                                                            {item.order.order_status == false && (
-                                                                <i className="fa-solid fa-circle-check text-dark"></i>
-                                                            )}
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                        {item.order.order_status == true && (
-                                                            <a target="_blank" download href={item.product.product_file} className="btn btn-primary btn-sm">
-                                                                Download
-                                                            </a>
-                                                        )}
-                                                    </td>
-                                                </tr>
-                                            );
+                                            return <OrderRow item={item} key={index} index={index} />
                                         })}
                                     </tbody>
                                 </table>

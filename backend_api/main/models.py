@@ -30,6 +30,7 @@ class Product(models.Model):
     image = models.ImageField(upload_to='product_imgs/', null=True)
     demo_url = models.URLField(null=True, blank=True)
     product_file = models.FileField(upload_to='product_file/', null=True)
+    downloads = models.IntegerField(default=0, null=True)
 
     def __str__(self):
         return self.title
