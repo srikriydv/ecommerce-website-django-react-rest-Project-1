@@ -92,10 +92,11 @@ function ConfirmOrder() {
             .then(function (response) {
                 console.log(response);
                 alert('Your payment is successful');
-                window.location.href='/customer/orders';
+                window.location.href='/order/success';
             })
             .catch(function (error) {
                 // console.log(error);
+                window.location.href='/order/failure';
             });
     }
 

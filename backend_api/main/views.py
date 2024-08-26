@@ -178,7 +178,7 @@ class CustomerOrderItemList(generics.ListAPIView):
         qs = super().get_queryset()
         customer_id = self.kwargs['pk']
  
-        return qs
+        return qs.filter(order__customer__id=customer_id)
 
 
 class OrderDetail(generics.ListAPIView):
