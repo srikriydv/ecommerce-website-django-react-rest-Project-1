@@ -34,6 +34,10 @@ class ProductList(generics.ListCreateAPIView):
             except models.ProductCategory.DoesNotExist:
                 qs = qs.none()  # Return an empty queryset if the category does not exist
         
+        if 'fetch_limit' in self.request.GET:
+            limit = int(self.request.GET['fetch_limit'])
+            qs = qs[:limit]
+        
         return qs
 
 class TagProductList(generics.ListCreateAPIView):

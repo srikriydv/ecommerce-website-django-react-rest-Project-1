@@ -2,30 +2,25 @@ import React from "react";
 import logo from "../asset/logo.avif";
 import { Link } from "react-router-dom";
 import SingleProduct from "./SingleProduct";
+import { useState, useEffect } from "react";
 
 function Home() {
-  const products = [
-    {
-      'id': 11,
-      'title': 'Product 1',
-      'price': 100
-    },
-    {
-      'id' : 12,
-      'title': 'Product 2',
-      'price': 200
-    },
-    {
-      'id' : 13,
-      'title': 'Product 1',
-      'price': 300
-    },
-    {
-      'id' : 14,
-      'title': 'Product 1',
-      'price': 400
-    },
-  ]
+  const baseUrl = 'http://127.0.0.1:8000/api';
+  const [Products, setProducts] = useState([]);
+
+  useEffect(() => {
+    fetchData(baseUrl + '/products/?fetch_limit=4');
+  }, []);
+
+  function fetchData(baseurl) {
+    fetch(baseurl) // api for the get request
+      .then(response => response.json())
+      .then((data) => {
+        setProducts(data.results);
+      })
+  }
+
+
   return (
     <main className="mt-4">
       <div className="container">
@@ -39,7 +34,7 @@ function Home() {
         <div className="row mb-4">
           {/* Product Box */}
           {
-            products.map((product) => <SingleProduct product={product} />)
+            Products.map((product) => <SingleProduct product={product} />)
           }
           {/* End Latest Product */}
         </div>
