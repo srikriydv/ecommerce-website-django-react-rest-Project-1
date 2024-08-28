@@ -12,7 +12,9 @@ class CustomerAdmin(admin.ModelAdmin):
         return obj.user.username
 admin.site.register(models.Customer, CustomerAdmin)
 admin.site.register(models.OrderItems)
-admin.site.register(models.CustomerAddress)
+class CustomerAddressAdmin(admin.ModelAdmin):
+    list_display = ['id','customer','address','default_address']
+admin.site.register(models.CustomerAddress, CustomerAddressAdmin)
 admin.site.register(models.ProductRating)
 admin.site.register(models.ProductImage)
 
