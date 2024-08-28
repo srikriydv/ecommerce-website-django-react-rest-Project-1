@@ -3,7 +3,8 @@ import logo from "../asset/logo.avif";
 import SingleProduct from "./SingleProduct";
 import { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
-import { CartContext } from "../Context";
+import { CartContext, UserContext } from "../Context";
+import axios from "axios";
 
 function ProductDetail() {
   const baseUrl = 'http://127.0.0.1:8000/api';
@@ -12,13 +13,16 @@ function ProductDetail() {
   const [productTags, setProductTags] = useState([]);
   const [relatedProducts, setRelatedProducts] = useState([]);
   const [isInCart, setIsInCart] = useState(false);
+  const [productInWishlist, setProductInWishlist] = useState(false);
   const { product_id } = useParams();
   const { cartData, setCartData } = useContext(CartContext);
+  const userContext = useContext(UserContext);
 
   useEffect(() => {
     fetchData(`${baseUrl}/product/${product_id}`);
     fetchRelatedData(`${baseUrl}/related-products/${product_id}`);
     checkProductInCart(product_id);
+    checkProductInWishlist(baseUrl, product_id);
   }, [product_id]);
 
   function fetchData(url) {
@@ -72,6 +76,44 @@ function ProductDetail() {
     <Link key={index} className="badge bg-secondary text-white me-1" to={`/products/${tag.trim()}`}>{tag.trim()}</Link>
   ));
 
+  // Save in Wishlist
+  function saveInWishlist(){
+    const customerId = localStorage.getItem('customer_id');
+    const formData = new FormData();
+    formData.append('customer', customerId);
+    formData.append('product', productData.id);
+    console.log(formData);
+    // Submit Data
+    axios.post(baseUrl + '/wishlist/', formData)
+      .then(function (response) {
+        setProductInWishlist(true);
+        console.log(response);
+
+        
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+  function checkProductInWishlist(baseUrl, product_id) {
+    const customerId = localStorage.getItem('customer_id');
+    const formData = new FormData();
+    formData.append('customer',customerId);
+    formData.append('product',product_id);
+    // Submit Data
+    axios.post(baseUrl + '/check-in-wishlist/', formData)
+      .then(function (response) {
+        if(response.data.bool==true){
+          setProductInWishlist(true);
+          console.log(productInWishlist);
+        }
+      })
+      .catch(function (error) {
+        setProductInWishlist(false);
+      });
+  }
+
   return (
     <section className="container mt-4">
       <div className="row">
@@ -120,9 +162,15 @@ function ProductDetail() {
             <button title="Buy Now" className="btn btn-primary ms-1">
               <i className="fa-solid fa-bag-shopping"></i> Buy Now
             </button>
-            <button title="Add to Wishlist" className="btn btn-danger ms-1">
-              <i className="fa fa-heart"></i> Add to Wishlist
-            </button>
+            {userContext ? (
+              <button title="Add to Wishlist" onClick={saveInWishlist} className={`btn btn-danger ms-1 ${productInWishlist ? 'disabled' : ''}`}>
+                <i className="fa fa-heart"></i> {productInWishlist ? 'In Wishlist' : 'Add to Wishlist'}
+              </button>
+            ) : (
+              <button title="Add to Wishlist" className="btn btn-danger ms-1 disabled">
+                <i className="fa fa-heart"></i> Add to Wishlist
+              </button>
+            )}
           </p>
           <hr />
           <div className="producttags">

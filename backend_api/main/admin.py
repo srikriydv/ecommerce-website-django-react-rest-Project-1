@@ -19,3 +19,7 @@ admin.site.register(models.ProductImage)
 class OrderAdmin(admin.ModelAdmin):
     list_display = ['id','customer','order_time','order_status']
 admin.site.register(models.Order, OrderAdmin)
+
+class WishlistAdmin(admin.ModelAdmin):
+    list_display = ['id','product','customer']
+admin.site.register(models.Wishlist, WishlistAdmin)

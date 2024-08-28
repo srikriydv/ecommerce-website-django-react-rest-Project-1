@@ -245,3 +245,50 @@ class CategoryList(generics.ListCreateAPIView):
 class CategoryDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = models.ProductCategory.objects.all()
     serializer_class = serializers.CategoryDetailSerializer
+
+# WishList
+class WishList(generics.ListCreateAPIView):
+    queryset = models.Wishlist.objects.all()
+    serializer_class = serializers.WishlistSerializer
+
+@csrf_exempt
+def check_in_wishlist(request):
+    if request.method == 'POST':
+        product_id = request.POST.get('product')
+        customer_id = request.POST.get('customer')
+        checkWishlist = models.Wishlist.objects.filter(product_id=product_id,customer_id=customer_id).count()
+        msg={
+            'bool':False,
+        }
+        if checkWishlist > 0:
+            msg={
+                'bool':True,
+            }
+    return JsonResponse(msg)
+
+class CustomerWishlistItems(generics.ListAPIView):
+    queryset = models.Wishlist.objects.all()
+    serializer_class = serializers.WishlistSerializer
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        customer_id = self.kwargs['pk']
+ 
+        return qs.filter(customer__id=customer_id)
+    
+class CustomerRemoveWishlistItems(generics.DestroyAPIView):
+    queryset = models.Wishlist.objects.all()
+    serializer_class = serializers.WishlistSerializer
+
+    def get_queryset(self):
+        customer_id = self.kwargs['pk']
+        wishlist_id = self.kwargs['id']
+        return super().get_queryset().filter(customer__id=customer_id, id=wishlist_id)
+
+    def destroy(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        if queryset.exists():
+            queryset.delete()
+            return JsonResponse({"message": "Item removed successfully."}, status=200)
+        else:
+            return JsonResponse({"error": "Item not found."}, status=404)

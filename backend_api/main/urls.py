@@ -30,6 +30,12 @@ urlpatterns = [
     path('customer/<int:pk>/orderitems/',  views.CustomerOrderItemList.as_view()),
     path('update-order-status/<int:order_id>',  views.update_order_status, name='update_order_status'),
     path('update_product_download_count/<int:product_id>',  views.update_product_download_count, name='update_product_download_count'),
+    #Wishlist
+    path('wishlist/',  views.WishList.as_view()),
+    path('check-in-wishlist/',  views.check_in_wishlist, name='check_in_wishlist'),
+    path('customer/<int:pk>/wishlistitems/',  views.CustomerWishlistItems.as_view()),
+    path('customer/<int:pk>/removewishlistitems/<int:id>',  views.CustomerRemoveWishlistItems.as_view()),
+    
     
 ]
 
