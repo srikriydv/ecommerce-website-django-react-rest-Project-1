@@ -238,6 +238,16 @@ def update_product_download_count(request, product_id):
 class CustomerAddressViewset(viewsets.ModelViewSet):
     serializer_class = serializers.CustomerAddressSerializer
     queryset = models.CustomerAddress.objects.all()
+    
+class CustomerAddressList(generics.ListAPIView):
+    serializer_class = serializers.CustomerAddressSerializer
+    queryset = models.CustomerAddress.objects.all()
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        customer_id = self.kwargs['pk']
+ 
+        return qs.filter(customer_id=customer_id)
 
 # Product Rating Viewset
 class ProductRatingViewset(viewsets.ModelViewSet):

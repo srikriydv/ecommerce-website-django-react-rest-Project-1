@@ -25,6 +25,7 @@ urlpatterns = [
     path('user/<int:pk>/',  views.UserDetail.as_view()),
     path('customer/login/',  views.customer_login, name='customer_login'),
     path('customer/register/',  views.customer_register, name='customer_register'),
+    path('customer/<int:pk>/address/',  views.CustomerAddressList.as_view()),
     #Order
     path('orders/',  views.OrderList.as_view()),
     path('order/<int:pk>/',  views.OrderDetail.as_view()),

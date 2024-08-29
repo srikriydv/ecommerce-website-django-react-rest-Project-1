@@ -24,6 +24,7 @@ import Profile from "./components/Customer/Profile.jsx";
 import ChangePassword from "./components/Customer/ChangePassword.jsx";
 import AddressList from "./components/Customer/AddressList.jsx";
 import AddAddress from "./components/Customer/AddAddress.jsx";
+import UpdateAddress from "./components/Customer/UpdateAddress.jsx";
 // Seller Panel
 import SellerRegister from "./components/seller/SellerRegister.jsx";
 import SellerLogin from "./components/seller/SellerLogin.jsx";
@@ -68,6 +69,7 @@ function App() {
           <Route path="/customer/change-password" element={<ChangePassword />} />
           <Route path="/customer/addresses" element={<AddressList />} />
           <Route path="/customer/add-address" element={<AddAddress />} />
+          <Route path="/customer/update-address/:address_id" element={<UpdateAddress />} />
           {/* Seller routes */}
           <Route path="/seller/register" element={<SellerRegister />} />
           <Route path="/seller/login" element={<SellerLogin />} />

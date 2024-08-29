@@ -1,8 +1,23 @@
 import Sidebar from "./Sidebar";
 import { Link } from "react-router-dom";
-
+import { useState, useEffect } from "react";
 function AddressList() {
+    const baseUrl = "http://127.0.0.1:8000/api/";
+    const [addressItems, setAddressItems] = useState([]);
+    const customerId = localStorage.getItem("customer_id");
 
+    useEffect(() => {
+        fetchData(baseUrl + "customer/" + customerId + "/address/");
+    }, []);
+
+    function fetchData(url) {
+        fetch(url)
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data);
+                setAddressItems(data.results);
+            });
+    }
 
     return (
         <>
@@ -19,56 +34,24 @@ function AddressList() {
                             </div>
                         </div>
                         <div className="row">
-                            <div className="col-4 mb-4">
-                                <div className="card">
-                                    <div className="card-body text-muted">
-                                        <h6>
-                                            <i className="fa fa-check-circle text-success mb-2"></i><br />
-                                            123, Janakpur, Anandnagar, Janakpur, Nepal
-                                        </h6>
+                        {addressItems.length > 0 ? (
+                                addressItems.map((item, index) => (
+                                    <div className="col-4 mb-4" key={index}>
+                                        <div className="card">
+                                            <div className="card-body text-muted">
+                                            <h6>
+                                                    {item.default_address && <div><i className="fa fa-check-circle text-success mb-2"></i><br /></div>}
+                                                    <Link to={`/customer/update-address/${item.id}`}>{item.address}</Link>
+                                                </h6>
+                                            </div>
+                                        </div>
                                     </div>
+                                ))
+                            ) : (
+                                <div className="col-12">
+                                    <p>No addresses found.</p>
                                 </div>
-                            </div>
-                            <div className="col-4 mb-4">
-                                <div className="card">
-                                    <div className="card-body text-muted">
-                                        <h6>
-                                            <span className="badge bg-secondary mb-2">Make Default</span> <br />
-                                            123, Janakpur, Anandnagar, Janakpur, Nepal
-                                        </h6>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-4 mb-4">
-                                <div className="card">
-                                    <div className="card-body text-muted">
-                                        <h6>
-                                            <span className="badge bg-secondary mb-2">Make Default</span> <br />
-                                            123, Janakpur, Anandnagar, Janakpur, Nepal
-                                        </h6>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-4 mb-4">
-                                <div className="card">
-                                    <div className="card-body text-muted">
-                                        <h6>
-                                            <span className="badge bg-secondary mb-2">Make Default</span> <br />
-                                            123, Janakpur, Anandnagar, Janakpur, Nepal
-                                        </h6>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-4 mb-4">
-                                <div className="card">
-                                    <div className="card-body text-muted">
-                                        <h6>
-                                            <span className="badge bg-secondary mb-2">Make Default</span> <br />
-                                            123, Janakpur, Anandnagar, Janakpur, Nepal
-                                        </h6>
-                                    </div>
-                                </div>
-                            </div>
+                            )}
                         </div>
                     </div>
                 </div>
