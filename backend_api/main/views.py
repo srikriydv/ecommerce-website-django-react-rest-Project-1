@@ -264,6 +264,19 @@ def mark_default_address(request, pk):
             }
     return JsonResponse(msg)
 
+
+@csrf_exempt
+def customer_dashboard(request, pk):
+    totalOrders = models.Order.objects.filter(customer_id=pk).count()
+    totalWishlists = models.Wishlist.objects.filter(customer_id=pk).count()
+    totalAddress = models.CustomerAddress.objects.filter(customer_id=pk).count()
+    msg={
+        'totalOrders':totalOrders,
+        'totalWishlists':totalWishlists,
+        'totalAddress':totalAddress
+    }
+    return JsonResponse(msg)
+
 # Product Rating Viewset
 class ProductRatingViewset(viewsets.ModelViewSet):
     serializer_class = serializers.ProductRatingSerializer

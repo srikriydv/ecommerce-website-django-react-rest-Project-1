@@ -1,7 +1,32 @@
+import { Link } from "react-router-dom";
 import Sidebar from "./Sidebar";
+import { useState, useEffect } from "react";
 
 function Dashboard(props) {
+    const baseUrl = "http://127.0.0.1:8000/api/";
+    const [dashboardCounts, setDashboardCounts] = useState({
+        totalOrders:0,
+        totalWishlists:0,
+        totalAddress:0
+    });
+    const customerId = localStorage.getItem("customer_id");
 
+    useEffect(() => {
+        fetchData(baseUrl + "customer/" + customerId + "/dashboard/");
+    }, []);
+
+    function fetchData(url) {
+        fetch(url)
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data);
+                setDashboardCounts({
+                    totalOrders:data.totalOrders,
+                    totalWishlists:data.totalWishlists,
+                    totalAddress:data.totalAddress
+                });
+            });
+    }
 
     return (
         <>
@@ -17,7 +42,7 @@ function Dashboard(props) {
                                 <div className="card">
                                     <div className="card-body text-center">
                                         <h4>Total Orders</h4>
-                                        <h4><a href="">123</a></h4>
+                                        <h4><Link to="/customer/orders">{dashboardCounts.totalOrders}</Link></h4>
                                     </div>
                                 </div>
                             </div>
@@ -25,7 +50,7 @@ function Dashboard(props) {
                                 <div className="card">
                                     <div className="card-body text-center">
                                         <h4>Total Wishlist</h4>
-                                        <h4><a href="">123</a></h4>
+                                        <h4><Link to="/customer/wishlist">{dashboardCounts.totalWishlists}</Link></h4>
                                     </div>
                                 </div>
                             </div>
@@ -33,7 +58,7 @@ function Dashboard(props) {
                                 <div className="card">
                                     <div className="card-body text-center">
                                         <h4>Total Addresses</h4>
-                                        <h4><a href="">6</a></h4>
+                                        <h4><Link to="/customer/addresses">{dashboardCounts.totalAddress}</Link></h4>
                                     </div>
                                 </div>
                             </div>

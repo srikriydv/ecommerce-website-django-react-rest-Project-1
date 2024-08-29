@@ -10,7 +10,7 @@ function ConfirmOrder() {
     const [confirmOrder, setConfirmOrder] = useState(false);
     const [orderId, setOrderId] = useState('');
     const [payMethod, setPayMethod] = useState('');
-    const { cartData, setCartData } = useContext(CartContext);
+    const { cartData, setCartData } = useContext(CartContext); // check if this is required
     console.log("usercontext =", userContext);
     if (userContext == null) {
         window.location.href = '/customer/login'
@@ -61,7 +61,8 @@ function ConfirmOrder() {
                         // Remove Cart Items
                         cartJson.splice(index, 1);
                         localStorage.setItem('cartData', JSON.stringify(cartJson));
-                        setCartData(cartJson);
+                        // setCartData(cartJson); // check if this is required
+                        console.log(cartJson);
 
                     })
                     .catch(function (error) {
