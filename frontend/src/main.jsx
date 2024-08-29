@@ -10,12 +10,13 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import { UserContext } from './Context.jsx';
 
 const checkCustomer=(localStorage.getItem('customer_login'));
+const checkVendor=(localStorage.getItem('vendor_login'));
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <>
     <Router>
-      <UserContext.Provider value={checkCustomer} >
+      <UserContext.Provider value={{checkCustomer,checkVendor}} >
         <App />
       </UserContext.Provider>
     </Router>

@@ -28,6 +28,7 @@ import UpdateAddress from "./components/Customer/UpdateAddress.jsx";
 // Seller Panel
 import SellerRegister from "./components/seller/SellerRegister.jsx";
 import SellerLogin from "./components/seller/SellerLogin.jsx";
+import SellerLogout from "./components/seller/VendorLogout.jsx";
 import SellerDashboard from "./components/seller/SellerDashboard.jsx";
 import SellerProducts from "./components/seller/SellerProducts.jsx";
 import AddProduct from "./components/seller/AddProduct.jsx";
@@ -73,6 +74,7 @@ function App() {
           {/* Seller routes */}
           <Route path="/seller/register" element={<SellerRegister />} />
           <Route path="/seller/login" element={<SellerLogin />} />
+          <Route path="/seller/logout" element={<SellerLogout />} />
           <Route path="/seller/dashboard" element={<SellerDashboard />} />
           <Route path="/seller/products" element={<SellerProducts />} />
           <Route path="/seller/add-product" element={<AddProduct />} />

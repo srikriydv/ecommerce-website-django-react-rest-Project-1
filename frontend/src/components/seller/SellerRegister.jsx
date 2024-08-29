@@ -35,7 +35,7 @@ function SellerRegister(props) {
         formData.append('address', registerFormData.address);
         console.log(formData);
         // Submit Data
-        axios.post(baseUrl + 'vender/register/', formData)
+        axios.post(baseUrl + 'vendor/register/', formData)
             .then(function (response) {
                 if(response.data.bool==false){
                     console.log(response.data.msg);

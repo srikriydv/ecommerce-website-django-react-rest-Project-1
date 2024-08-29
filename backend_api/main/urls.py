@@ -10,7 +10,8 @@ urlpatterns = [
     # Vendors
     path('vendors/',  views.VendorList.as_view()),
     path('vendor/<int:pk>/',  views.vendorDetail.as_view()),
-    path('vender/register/',  views.vender_register, name='vender_register'),
+    path('vendor/register/',  views.vendor_register, name='vendor_register'),
+    path('vendor/login/',  views.vendor_login, name='vendor_login'),
     # Products
     path('products/',  views.ProductList.as_view()),
     path('products/<str:tag>',  views.TagProductList.as_view()),

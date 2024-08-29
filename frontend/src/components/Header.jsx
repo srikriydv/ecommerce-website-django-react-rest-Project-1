@@ -7,7 +7,8 @@ function Header() {
   const linkStyle = {
     fontSize: "40px",
   };
-  const userContext = useContext(UserContext);
+  const { checkCustomer, checkVendor } = useContext(UserContext);
+
   const {cartData, setCartData} = useContext(CartContext);
   if(cartData == null){
     var cartItems = 0;
@@ -49,12 +50,12 @@ function Header() {
                   My Account
                 </a>
                 <ul className="dropdown-menu">
-                  {userContext != 'true' &&
+                  {checkCustomer != 'true' &&
                     <>
                       <li><Link className="dropdown-item" to="/customer/login">Login</Link></li>
                       <li><Link className="dropdown-item" to="/customer/register">Register</Link></li>
                     </>}
-                  {userContext == 'true' &&
+                  {checkCustomer == 'true' &&
                     <>
                       <li><Link className="dropdown-item" to="/customer/dashboard">Dashboard</Link></li>
                       <li><Link className="dropdown-item" to="/customer/logout">logout</Link></li>
@@ -67,11 +68,17 @@ function Header() {
                   Vender Panel
                 </a>
                 <ul className="dropdown-menu">
-                  <li><Link className="dropdown-item" to="/seller/login">Login</Link></li>
-                  <li><Link className="dropdown-item" to="/seller/register">Register</Link></li>
-                  <li><hr className="dropdown-divider" /></li>
-                  <li><Link className="dropdown-item" to="/seller/dashboard">Dashboard</Link></li>
-                  <li><Link className="dropdown-item" to="/seller/login">logout</Link></li>
+                  {checkVendor != 'true' &&
+                    <>
+                      <li><Link className="dropdown-item" to="/seller/login">Login</Link></li>
+                      <li><Link className="dropdown-item" to="/seller/register">Register</Link></li>
+                    </>}
+                  {checkVendor == 'true' &&
+                    <>
+                      <li><Link className="dropdown-item" to="/seller/dashboard">Dashboard</Link></li>
+                      <li><Link className="dropdown-item" to="/seller/logout">logout</Link></li>
+                    </>
+                  }
                 </ul>
               </li>
               <li className="nav-item">

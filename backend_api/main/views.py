@@ -7,7 +7,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 
-# Vender View
+# vendor View
 class VendorList(generics.ListCreateAPIView):
     queryset = models.Vendor.objects.all()
     serializer_class = serializers.VendorSerializer
@@ -18,7 +18,27 @@ class vendorDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = serializers.VendorDetailSerializer
 
 @csrf_exempt
-def vender_register(request):
+def vendor_login(request):
+    username = request.POST.get('username')
+    password = request.POST.get('password')
+    print(f"Attempting to authenticate user: {username}")
+    user = authenticate(username=username, password=password)
+    if user:
+        vendor = models.Vendor.objects.get(user=user)
+        msg={
+            'id':vendor.id,
+            'bool':True,
+            'user':user.username
+        }
+    else:
+        msg={
+            'bool':False,
+            'msg':'Invalid Username/Password!!'
+        }
+    return JsonResponse(msg)
+
+@csrf_exempt
+def vendor_register(request):
     first_name = request.POST.get('first_name')
     last_name = request.POST.get('last_name')
     username = request.POST.get('username')
@@ -45,7 +65,7 @@ def vender_register(request):
         user.save()
         if user:
             try:
-                vender=models.Vendor.objects.create(
+                vendor=models.Vendor.objects.create(
                     user=user,
                     mobile=mobile,
                     address=address,
@@ -53,7 +73,7 @@ def vender_register(request):
                 msg={
                     'bool':True,
                     'user':user.id,
-                    'vender':vender.id,
+                    'vendor':vendor.id,
                     'msg':'Thank you for your registration. You can login now',
                 }
             except IntegrityError:
