@@ -1,6 +1,8 @@
 import Sidebar from "./Sidebar";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import axios from "axios";
+
 function AddressList() {
     const baseUrl = "http://127.0.0.1:8000/api/";
     const [addressItems, setAddressItems] = useState([]);
@@ -14,8 +16,30 @@ function AddressList() {
         fetch(url)
             .then((response) => response.json())
             .then((data) => {
-                console.log(data);
+                console.log(data.results);
                 setAddressItems(data.results);
+            });
+    }
+
+    const handleDefaultAddress = (address,address_id) =>{
+        const formData = new FormData();
+        // formUserData.append('user.id', profileData.id);
+        formData.append('address', address);
+        formData.append('customer', customerId);
+        formData.append('default_address', true);
+
+        // Submit Data
+        axios.post(baseUrl + 'make-default-address/'+address_id+'/', formData)
+            .then((response) => {
+                console.log(response);
+                if (response.data.bool == true) {
+                    window.location.reload();
+                } else {
+                    console.log('not 200');
+                }
+            })
+            .catch((error) => {
+                console.log(error);
             });
     }
 
@@ -40,7 +64,8 @@ function AddressList() {
                                         <div className="card">
                                             <div className="card-body text-muted">
                                             <h6>
-                                                    {item.default_address && <div><i className="fa fa-check-circle text-success mb-2"></i><br /></div>}
+                                                    {item.default_address && <span role="button"><i className="fa fa-check-circle text-success mb-2"></i><br /></span>}
+                                                    {!item.default_address && <span role="button" onClick={()=>handleDefaultAddress(item.address,item.id)}><i className="far fa-check-circle text-secondary mb-2"></i><br /></span>}
                                                     <Link to={`/customer/update-address/${item.id}`}>{item.address}</Link>
                                                 </h6>
                                             </div>

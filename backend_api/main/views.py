@@ -247,7 +247,22 @@ class CustomerAddressList(generics.ListAPIView):
         qs = super().get_queryset()
         customer_id = self.kwargs['pk']
  
-        return qs.filter(customer_id=customer_id)
+        return qs.filter(customer_id=customer_id).order_by('id')
+    
+@csrf_exempt
+def mark_default_address(request, pk):
+    if request.method == 'POST':
+        customer_id = request.POST.get('customer')
+        models.CustomerAddress.objects.filter(customer_id=customer_id).update(default_address=False)
+        res = models.CustomerAddress.objects.filter(id=pk).update(default_address = True)
+        msg={
+            'bool':False,
+        }
+        if res:
+            msg={
+                'bool':True,
+            }
+    return JsonResponse(msg)
 
 # Product Rating Viewset
 class ProductRatingViewset(viewsets.ModelViewSet):
