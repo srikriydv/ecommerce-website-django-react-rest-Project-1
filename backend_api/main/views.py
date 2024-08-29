@@ -17,6 +17,62 @@ class vendorDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = models.Vendor.objects.all()
     serializer_class = serializers.VendorDetailSerializer
 
+@csrf_exempt
+def vender_register(request):
+    first_name = request.POST.get('first_name')
+    last_name = request.POST.get('last_name')
+    username = request.POST.get('username')
+    email = request.POST.get('email')
+    mobile = request.POST.get('mobile')
+    address = request.POST.get('address')
+    if not mobile:
+        return JsonResponse({'error': 'Mobile number is required'}, status=400)
+    password = request.POST.get('password')
+    if models.Customer.objects.filter(mobile=mobile).exists():
+        return JsonResponse({
+            'bool': False,
+            'msg': 'Mobile already exists!!'
+        }, status=400)
+    try:
+        user = User.objects.create(
+            first_name=first_name,
+            last_name=last_name,
+            username=username,
+            email=email,
+            password=password,
+        )
+        user.set_password(password)
+        user.save()
+        if user:
+            try:
+                vender=models.Vendor.objects.create(
+                    user=user,
+                    mobile=mobile,
+                    address=address,
+                )
+                msg={
+                    'bool':True,
+                    'user':user.id,
+                    'vender':vender.id,
+                    'msg':'Thank you for your registration. You can login now',
+                }
+            except IntegrityError:
+                msg={
+                'bool':False,
+                'msg':'Mobile already exist!!'
+            }
+        else:
+            msg={
+                'bool':False,
+                'msg':'Oops something wrong!!'
+            }
+    except IntegrityError:
+        msg={
+                'bool':False,
+                'msg':'Username already exist!!'
+            }
+    return JsonResponse(msg)
+
 # Product View
 class ProductList(generics.ListCreateAPIView):
     queryset = models.Product.objects.all()

@@ -2,7 +2,11 @@ from django.contrib import admin
 from . import models
 
 # Register your models here.
-admin.site.register(models.Vendor)
+class VenderAdmin(admin.ModelAdmin):
+    list_display = ['id','get_username', 'mobile','address']
+    def get_username(self,obj):
+        return obj.user.username
+admin.site.register(models.Vendor, VenderAdmin)
 admin.site.register(models.Product)
 admin.site.register(models.ProductCategory)
 
