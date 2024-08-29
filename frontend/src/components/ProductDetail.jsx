@@ -16,7 +16,7 @@ function ProductDetail() {
   const [productInWishlist, setProductInWishlist] = useState(false);
   const { product_id } = useParams();
   const { cartData, setCartData } = useContext(CartContext);
-  const userContext = useContext(UserContext);
+  const {checkCustomer} = useContext(UserContext);
 
   useEffect(() => {
     fetchData(`${baseUrl}/product/${product_id}`);
@@ -162,7 +162,7 @@ function ProductDetail() {
             <button title="Buy Now" className="btn btn-primary ms-1">
               <i className="fa-solid fa-bag-shopping"></i> Buy Now
             </button>
-            {userContext ? (
+            {checkCustomer ? (
               <button title="Add to Wishlist" onClick={saveInWishlist} className={`btn btn-danger ms-1 ${productInWishlist ? 'disabled' : ''}`}>
                 <i className="fa fa-heart"></i> {productInWishlist ? 'In Wishlist' : 'Add to Wishlist'}
               </button>

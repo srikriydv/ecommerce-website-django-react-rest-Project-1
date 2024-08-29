@@ -6,16 +6,16 @@ import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js"
 const baseUrl = 'http://127.0.0.1:8000/api/';
 
 function ConfirmOrder() {
-    const userContext = useContext(UserContext);
+    const {checkCustomer} = useContext(UserContext);
     const [confirmOrder, setConfirmOrder] = useState(false);
     const [orderId, setOrderId] = useState('');
     const [payMethod, setPayMethod] = useState('');
     const { cartData, setCartData } = useContext(CartContext); // check if this is required
-    console.log("usercontext =", userContext);
-    if (userContext == null) {
+    console.log("usercontext =", checkCustomer);
+    if (checkCustomer == null) {
         window.location.href = '/customer/login'
     } else {
-        console.log("usercontext", userContext);
+        console.log("usercontext", checkCustomer);
         if (confirmOrder == false) {
             addOrderInTable();
         }
