@@ -1,8 +1,25 @@
 import { Link } from "react-router-dom";
 import SellerSidebar from "./SellerSidebar";
+import { useState, useEffect } from "react";
 
 function SellerProducts(props) {
+    const baseUrl = 'http://127.0.0.1:8000/api';
+    const [Products, setProducts] = useState([]);
+    const vendor_id = localStorage.getItem('vendor_id');
 
+    useEffect(() => {
+        fetchData(baseUrl + '/products/?vendor_id=' + vendor_id);
+    }, []);
+
+    function fetchData(baseurl) {
+        console.log(baseurl)
+        fetch(baseurl) // api for the get request
+            .then(response => response.json())
+            .then((data) => {
+                console.log(data.results);
+                setProducts(data.results);
+            })
+    }
 
     return (
         <>
@@ -33,17 +50,25 @@ function SellerProducts(props) {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Product Title</td>
-                                        <td>500</td>
-                                        <td>Published</td>
-                                        <td>
-                                            <a href="#" className="btn btn-info">View</a>
-                                            <a href="#" className="btn btn-primary ms-2">Edit</a>
-                                            <a href="#" className="btn btn-danger ms-2">Delete</a>
-                                        </td>
-                                    </tr>
+                                    {
+                                        Products.map((product, index) => 
+                                            <tr>
+                                                <td>{index+1}</td>
+                                                <td>{product.title}</td>
+                                                <td>{product.price}</td>
+                                                <td>
+                                                    {product.publish_status && <span className="text-success">Published</span>}
+                                                    {!product.publish_status && <span className="text-secondary">Pending</span>}
+                                                </td>
+                                                <td>
+                                                    <a href="#" className="btn btn-info">View</a>
+                                                    <a href="#" className="btn btn-primary ms-2">Edit</a>
+                                                    <a href="#" className="btn btn-danger ms-2">Delete</a>
+                                                </td>
+                                            </tr>
+                                        )
+                                    }
+
                                 </tbody>
                             </table>
 

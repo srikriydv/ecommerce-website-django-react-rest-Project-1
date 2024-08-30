@@ -113,6 +113,14 @@ class ProductList(generics.ListCreateAPIView):
         if 'fetch_limit' in self.request.GET:
             limit = int(self.request.GET['fetch_limit'])
             qs = qs[:limit]
+
+        if 'vendor_id' in self.request.GET:
+            try:
+                vendor_id = int(self.request.GET['vendor_id'])
+                print(vendor_id)
+                qs = qs.filter(vendor_id=vendor_id)
+            except ValueError:
+                pass  # Ignore invalid values for vendor_id
         
         return qs
 
