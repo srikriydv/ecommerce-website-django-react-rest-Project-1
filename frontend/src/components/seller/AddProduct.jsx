@@ -26,7 +26,6 @@ function AddProduct() {
         // Fetch categories from the backend
         axios.get(baseUrl + 'categories/')
             .then(response => {
-                console.log(response.data.results);
                 setCategories(response.data.results);
             })
             .catch(error => {
@@ -39,10 +38,8 @@ function AddProduct() {
         if (files) {
             // Handle file input
             setFormData({ ...formData, [id]: files[0] });
-            console.log(formData);
         } else {
             setFormData({ ...formData, [id]: value });
-            console.log(formData);
         }
     };
 
@@ -51,13 +48,14 @@ function AddProduct() {
         console.log(formData);
 
         const data = new FormData();
+        console.log(formData.category,formData.vendor);
         data.append('category', formData.category);
         data.append('vendor', formData.vendor);
         data.append('title', formData.title);
         data.append('slug', formData.slug);
         data.append('detail', formData.detail);
         data.append('price', formData.price);
-        data.append('tag_list', [formData.tags]);
+        data.append('tags', [formData.tags]);
         data.append('demo_url', formData.demo_url);
 
         console.log(data.tags);
@@ -82,7 +80,7 @@ function AddProduct() {
                 slug: '',
                 detail: '',
                 price: '',
-                tag_list: '',
+                tags: '',
                 image: null,
                 demo_url: '',
                 product_file: null,
