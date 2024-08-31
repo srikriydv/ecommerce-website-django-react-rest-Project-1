@@ -29,7 +29,7 @@ function TagProducts() {
   }
 
   var links = [];
-  var limit = 2;
+  var limit = 4;
   var totalLinks = Math.ceil(totalResults / limit);
   console.log("total link count is 2 or not", totalLinks);
   for (let i = 1; i <= totalLinks; i++) {
