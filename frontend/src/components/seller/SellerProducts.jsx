@@ -54,7 +54,7 @@ function SellerProducts(props) {
                                         Products.map((product, index) => 
                                             <tr>
                                                 <td>{index+1}</td>
-                                                <td>{product.title}</td>
+                                                <td><Link to={`/seller/update-product/${product.id}`}>{product.title}</Link></td>
                                                 <td>{product.price}</td>
                                                 <td>
                                                     {product.publish_status && <span className="text-success">Published</span>}

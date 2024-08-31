@@ -32,6 +32,7 @@ import SellerLogout from "./components/seller/VendorLogout.jsx";
 import SellerDashboard from "./components/seller/SellerDashboard.jsx";
 import SellerProducts from "./components/seller/SellerProducts.jsx";
 import AddProduct from "./components/seller/AddProduct.jsx";
+import UpdateProduct from "./components/seller/UpdateProduct.jsx";
 import VenderOrders from "./components/seller/VenderOrders.jsx";
 import Customers from "./components/seller/Customers.jsx";
 import Reports from "./components/seller/Reports.jsx";
@@ -78,6 +79,7 @@ function App() {
           <Route path="/seller/dashboard" element={<SellerDashboard />} />
           <Route path="/seller/products" element={<SellerProducts />} />
           <Route path="/seller/add-product" element={<AddProduct />} />
+          <Route path="/seller/update-product/:product_id" element={<UpdateProduct />} />
           <Route path="/seller/orders" element={<VenderOrders />} />
           <Route path="/seller/customers" element={<Customers />} />
           <Route path="/seller/reports" element={<Reports />} />
