@@ -21,6 +21,7 @@ function AddProduct() {
     });
 
     const [categories, setCategories] = useState([]);
+    const [productImgs, setProductImgs] = useState([])
 
     useEffect(() => {
         // Fetch categories from the backend
@@ -43,12 +44,20 @@ function AddProduct() {
         }
     };
 
+    const handleMultipleChange = (e) => {
+        var files = e.target.files;
+        console.log(files);
+        if (files.length > 0) {
+            setProductImgs(files);
+        }
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log(formData);
 
         const data = new FormData();
-        console.log(formData.category,formData.vendor);
+        console.log(formData.category, formData.vendor);
         data.append('category', formData.category);
         data.append('vendor', formData.vendor);
         data.append('title', formData.title);
@@ -60,7 +69,7 @@ function AddProduct() {
 
         console.log(data.tags);
         console.log(formData.tags);
-        
+
         if (formData.image) data.append('image', formData.image);  // Correct key for image
         if (formData.product_file) data.append('product_file', formData.product_file);  // Correct key for product file
 
@@ -71,25 +80,51 @@ function AddProduct() {
                 'Content-Type': 'multipart/form-data',
             },
         })
-        .then((response) => {
-            alert('Product added successfully!');
-            setFormData({
-                category: '',
-                vendor: vendorId,
-                title: '',
-                slug: '',
-                detail: '',
-                price: '',
-                tags: '',
-                image: null,
-                demo_url: '',
-                product_file: null,
+            .then((response) => {
+                console.log('Product added successfully!');
+                console.log(response);
+                if (response.status == 201) {
+                    const imgData = new FormData();
+                    imgData.append('product', response.data.id);
+                    console.log(productImgs);
+                    for (let i = 0; i < productImgs.length; i++) {
+                        console.log(productImgs[i]);
+                        imgData.append('image', productImgs[i]);
+                        console.log(imgData);
+                        axios.post(baseUrl + 'product-image/', imgData)
+                            .then(function (response) {
+                                console.log(response);
+                                if (response.status == 201) {
+                                    console.log("Image added succesfully");
+                                } else {
+                                    console.log("someError Occurred");
+                                }
+                            })
+                            .catch(function (error) {
+                                console.log(error);
+                            });
+                    }
+                } else {
+                    console.log('status 201 not provided by the server');
+                }
+                setFormData({
+                    category: '',
+                    vendor: vendorId,
+                    title: '',
+                    slug: '',
+                    detail: '',
+                    price: '',
+                    tags: '',
+                    image: null,
+                    demo_url: '',
+                    product_file: null,
+                });
+                alert("product Added successfully")
+            })
+            .catch((error) => {
+                console.error('Error submitting form:', error);
+                alert('Error submitting form.');
             });
-        })
-        .catch((error) => {
-            console.error('Error submitting form:', error);
-            alert('Error submitting form.');
-        });
     };
 
     return (
@@ -145,8 +180,12 @@ function AddProduct() {
                                         <input type="url" className="form-control" id="demo_url" value={formData.demo_url} onChange={handleChange} />
                                     </div>
                                     <div className="mb-3">
-                                        <label htmlFor="image" className="form-label">Product Images</label>
+                                        <label htmlFor="image" className="form-label">Profile Image</label>
                                         <input type="file" className="form-control" id="image" onChange={handleChange} />
+                                    </div>
+                                    <div className="mb-3">
+                                        <label htmlFor="image" className="form-label">Product Images</label>
+                                        <input type="file" multiple className="form-control" id="image" onChange={handleMultipleChange} />
                                     </div>
                                     <div className="mb-3">
                                         <label htmlFor="product_file" className="form-label">Product File</label>

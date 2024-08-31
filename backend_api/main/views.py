@@ -152,6 +152,10 @@ class ProductDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = models.Product.objects.all()
     serializer_class = serializers.ProductDetailSerializer
 
+class ProductImage(generics.CreateAPIView):
+    queryset = models.ProductImage.objects.all()
+    serializer_class = serializers.ProductImageSerializer
+
 # Customers View
 class CustomerList(generics.ListAPIView):
     queryset = models.Customer.objects.all()
