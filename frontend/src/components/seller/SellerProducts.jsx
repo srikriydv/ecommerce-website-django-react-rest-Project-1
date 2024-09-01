@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import SellerSidebar from "./SellerSidebar";
 import { useState, useEffect } from "react";
+import axios from "axios";
 
 function SellerProducts(props) {
     const baseUrl = 'http://127.0.0.1:8000/api';
@@ -19,6 +20,22 @@ function SellerProducts(props) {
                 console.log(data.results);
                 setProducts(data.results);
             })
+    }
+
+    const handleDelete = (product_id) => {
+        if (window.confirm("Are you sure you want to delete this product?")) {
+            axios.delete(`${baseUrl}/product/${product_id}/`)
+                .then((response) => {
+                    // Handle successful deletion
+                    alert('Product deleted successfully.');
+                    // Optionally, refresh the product list or update the UI
+                    window.location.reload();
+                })
+                .catch((error) => {
+                    console.error('Error deleting product:', error);
+                    alert('Error deleting product.');
+                });
+        }
     }
 
     return (
@@ -61,9 +78,8 @@ function SellerProducts(props) {
                                                     {!product.publish_status && <span className="text-secondary">Pending</span>}
                                                 </td>
                                                 <td>
-                                                    <a href="#" className="btn btn-info">View</a>
-                                                    <a href="#" className="btn btn-primary ms-2">Edit</a>
-                                                    <a href="#" className="btn btn-danger ms-2">Delete</a>
+                                                    <Link to={`/seller/update-product/${product.id}`} className="btn btn-primary ms-2">Edit</Link>
+                                                    <Link onClick={()=>handleDelete(product.id)} className="btn btn-danger ms-2">Delete</Link>
                                                 </td>
                                             </tr>
                                         )

@@ -26,7 +26,7 @@ function Categories() {
   }
 
   var links = [];
-  var limit = 1;
+  var limit = 2;
   var totalLinks = totalResults / limit;
   for (let i = 1; i <= totalLinks; i++) {
     links.push(
