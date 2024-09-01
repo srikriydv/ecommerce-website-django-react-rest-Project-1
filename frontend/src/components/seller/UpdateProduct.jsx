@@ -67,10 +67,10 @@ function UpdateProduct() {
         if (files) {
             // Handle file input
             setFormData({ ...formData, [id]: files[0] });
-            if(id=='image'){
+            if (id == 'image') {
                 setIsProductImg(true);
             }
-            if(id=="product_file"){
+            if (id == "product_file") {
                 setIsProductFile(true);
             }
         } else {
@@ -86,6 +86,22 @@ function UpdateProduct() {
             setMultipleImgs(true);
             setProductImgs(files);
         }
+    }
+
+    const handleDelete = (image_id) => {
+        axios.delete(baseUrl + 'product-image/'+image_id+'/')
+            .then(function (response) {
+                console.log(response);
+                if (response.status == 204) {
+                    console.log("Image Deleted succesfully");
+                    window.location.reload();
+                } else {
+                    console.log("someError Occurred");
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     }
 
     const handleSubmit = (e) => {
@@ -143,6 +159,7 @@ function UpdateProduct() {
                 console.log('Product added successfully!');
                 console.log(response);
                 alert("product Added successfully")
+                window.location.reload();
             })
             .catch((error) => {
                 console.error('Error submitting form:', error);
@@ -217,8 +234,12 @@ function UpdateProduct() {
                                     <div className="mb-3">
                                         <label htmlFor="image" className="form-label">Product Images</label>
                                         <p>
-                                            {formData.product_imgs.map((item, index) => (<img src={item.image} className="img-thumbnail" width={70} alt="Profile" />)
-                                            )}
+                                            {formData.product_imgs.map((item, index) => (
+                                                <div style={styles.divImage} className="me-3" key={index}>
+                                                    <img src={item.image} className="img-thumbnail" width={150} alt="Profile" />
+                                                    <button type="button" onClick={() => handleDelete(item.id)} style={styles.buttonStyle}>×</button>
+                                                </div>
+                                            ))}
                                         </p>
                                         <input type="file" multiple className="form-control" id="product_imgs" onChange={handleMultipleChange} />
                                     </div>
@@ -227,7 +248,7 @@ function UpdateProduct() {
                                         {!isProductFile && <p className="text-secondary">{formData.product_file}</p>}
                                         <input type="file" className="form-control" id="product_file" onChange={handleChange} />
                                     </div>
-                                    <button type="submit" className="btn btn-primary">Submit</button>
+                                    <button type="submit"  className="btn btn-primary">Submit</button>
                                 </form>
                             </div>
                         </div>
@@ -237,5 +258,29 @@ function UpdateProduct() {
         </>
     );
 }
+
+const styles = {
+    divImage: {
+        position: 'relative',
+        display: 'inline-block',
+    },
+    buttonStyle: {
+        position: 'absolute',
+        top: 0,
+        right: 0,
+        backgroundColor: 'red',
+        border: 'none',
+        color: 'white',
+        borderRadius: '50%',
+        width: '30px',
+        height: '30px',
+        cursor: 'pointer',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 0,
+    },
+};
+
 
 export default UpdateProduct;
