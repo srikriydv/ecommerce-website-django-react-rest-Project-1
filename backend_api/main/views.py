@@ -269,6 +269,19 @@ class OrderItemList(generics.ListCreateAPIView):
     serializer_class = serializers.OrderItemSerializer
     # permission_classes = [permissions.IsAuthenticated]
 
+    def get_queryset(self):
+        qs = super().get_queryset()
+        
+        if 'vendor_id' in self.request.GET:
+            try:
+                vendor_id = int(self.request.GET['vendor_id'])
+                print(vendor_id)
+                qs = qs.filter(product__vendor__id=vendor_id)
+            except ValueError:
+                pass  # Ignore invalid values for vendor_id
+        
+        return qs
+
 class CustomerOrderItemList(generics.ListAPIView):
     queryset = models.OrderItems.objects.all()
     serializer_class = serializers.CustomOrderItemSerializer
@@ -282,7 +295,7 @@ class CustomerOrderItemList(generics.ListAPIView):
 
 
 class OrderDetail(generics.ListAPIView):
-    # queryset = models.OrderItems.objects.all()
+    queryset = models.OrderItems.objects.all()
     serializer_class = serializers.OrderDetailSerializer
 
     def get_queryset(self):

@@ -65,7 +65,7 @@ class CustomerSerializer(serializers.ModelSerializer):
     
     def __init__(self, *args, **kwargs):
         super(CustomerSerializer, self).__init__(*args, **kwargs)
-        # self.Meta.depth = 1
+        self.Meta.depth = 1
 
 class CustomerDetailSerializer(serializers.ModelSerializer):
     class Meta:
@@ -74,17 +74,18 @@ class CustomerDetailSerializer(serializers.ModelSerializer):
 
 # Order Serializer
 class OrderSerializer(serializers.ModelSerializer):
+    customer = CustomerSerializer
     class Meta:
         model = models.Order
         fields = ['id','customer','order_status']
     
     def __init__(self, *args, **kwargs):
         super(OrderSerializer, self).__init__(*args, **kwargs)
-        self.Meta.depth = 1
+        self.Meta.depth = 2
 
 class OrderItemSerializer(serializers.ModelSerializer):
-    # order = OrderSerializer()
-    # product = ProductDetailSerializer()
+    order = OrderSerializer()
+    product = ProductDetailSerializer()
     class Meta:
         model = models.OrderItems
         fields = ['id', 'order', 'product', 'qty', 'price']

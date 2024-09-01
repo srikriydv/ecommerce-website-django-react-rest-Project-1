@@ -1,9 +1,27 @@
 import SellerSidebar from "./SellerSidebar";
 import logo from "../../asset/logo.avif"
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 function VenderOrders() {
+    const baseUrl = 'http://127.0.0.1:8000/api';
+    const [Products, setProducts] = useState([]);
+    const vendor_id = localStorage.getItem('vendor_id');
 
+    useEffect(() => {
+        fetchData(baseUrl + '/orderitems/?vendor_id=' + vendor_id);
+    }, []);
+
+    function fetchData(baseurl) {
+        console.log(baseurl)
+        fetch(baseurl) // api for the get request
+            .then(response => response.json())
+            .then((data) => {
+                console.log(data.results);
+                setProducts(data.results);
+            })
+    }
 
     return (
         <>
@@ -23,53 +41,37 @@ function VenderOrders() {
                                             <th>Product</th>
                                             <th>Product Name</th>
                                             <th>Price</th>
+                                            <th>Customer Name</th>
                                             <th>Status</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>
-                                                <Link><img src={logo} className="img-thumbnail" width={70} alt="" /></Link>
-                                            </td>
-                                            <td><Link>Django</Link></td>
-                                            <td>Rs 500</td>
-                                            <td><span className="text-success"><i className="fa-solid fa-circle-check"></i> Completed</span></td>
-                                            <td>
-                                                <div class="dropdown">
-                                                    <button class="btn btn-primary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                        Change Status
-                                                    </button>
-                                                    <ul class="dropdown-menu">
-                                                        <li><a class="dropdown-item" href="#">Approve</a></li>
-                                                        <li><a class="dropdown-item" href="#">Complete</a></li>
-                                                        <li><a class="dropdown-item" href="#">Sent</a></li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>
-                                                <Link><img src={logo} className="img-thumbnail" width={70} alt="" /></Link>
-                                            </td>
-                                            <td><Link>Django</Link></td>
-                                            <td>Rs 500</td>
-                                            <td><span className="text-success"><i className="fa-solid fa-circle-check"></i> Completed</span></td>
-                                            <td>
-                                                <div class="dropdown">
-                                                    <button class="btn btn-primary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                        Change Status
-                                                    </button>
-                                                    <ul class="dropdown-menu">
-                                                    <li><a class="dropdown-item" href="#">Approve</a></li>
-                                                        <li><a class="dropdown-item" href="#">Complete</a></li>
-                                                        <li><a class="dropdown-item" href="#">Sent</a></li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                        {Products.map((item, index) =>
+                                            <tr>
+                                                <td>{index+1}</td>
+                                                <td>
+                                                    <Link><img src={item.product.image} className="img-thumbnail" width={70} alt="" /></Link>
+                                                </td>
+                                                <td><Link to={`/seller/update-product/${item.product.id}`}>{item.product.title}</Link></td>
+                                                <td>{item.product.price}</td>
+                                                <td>{item.order.customer.user.username}</td>
+                                                <td><span className="text-success"><i className="fa-solid fa-circle-check"></i> Completed</span></td>
+                                                <td>
+                                                    <div class="dropdown">
+                                                        <button class="btn btn-primary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                            Change Status
+                                                        </button>
+                                                        <ul class="dropdown-menu">
+                                                            <li><a class="dropdown-item" href="#">Approve</a></li>
+                                                            <li><a class="dropdown-item" href="#">Complete</a></li>
+                                                            <li><a class="dropdown-item" href="#">Sent</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        )}
+
                                     </tbody>
                                 </table>
                             </div>
