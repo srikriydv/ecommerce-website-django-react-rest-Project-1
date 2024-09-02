@@ -1,7 +1,25 @@
 import SellerSidebar from "./SellerSidebar";
+import { useState,useEffect } from "react";
 
 function Customers() {
+    const baseUrl = 'http://127.0.0.1:8000/api';
+    const [orderItems, setOrderItems] = useState([]);
+    const vendor_id = localStorage.getItem('vendor_id');
 
+    useEffect(() => {
+        fetchData(baseUrl + '/vendor/' + vendor_id +'/customers');
+    }, []);
+
+    function fetchData(baseurl) {
+        console.log(baseurl)
+        fetch(baseurl) // api for the get request
+            .then(response => response.json())
+            .then((data) => {
+                console.log(data.results);
+                setOrderItems(data.results);
+                console.log(orderItems);
+            })
+    }
 
     return (
         <>
@@ -25,30 +43,21 @@ function Customers() {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>1</td>
+                                        {orderItems.map((item, index)=>
+                                            <tr>
+                                            <td>{index+1}</td>
                                             <td>
-                                                John Wick
+                                                {item.user.username}
                                             </td>
-                                            <td>johntouchmydog@gmail.com</td>
-                                            <td>9825223325</td>
-                                            <td>
-                                                <button className="btn btn-primary btn-sm">Orders</button>
-                                                <button className="btn btn-danger btn-sm ms-2">Remove from List</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>
-                                                John Constatine
-                                            </td>
-                                            <td>universedestroyerjogn@gmail.com</td>
-                                            <td>983925335</td>
+                                            <td>{item.user.email}</td>
+                                            <td>{item.mobile}</td>
                                             <td>
                                                 <button className="btn btn-primary btn-sm">Orders</button>
                                                 <button className="btn btn-danger btn-sm ms-2">Remove from List</button>
                                             </td>
                                         </tr>
+                                        )
+                                        }
                                     </tbody>
                                 </table>
                             </div>

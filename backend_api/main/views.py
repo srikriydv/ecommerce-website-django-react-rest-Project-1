@@ -17,6 +17,23 @@ class vendorDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = models.Vendor.objects.all()
     serializer_class = serializers.VendorDetailSerializer
 
+class vendorCustomers(generics.ListAPIView):
+    queryset = models.OrderItems.objects.all()
+    serializer_class = serializers.CustomerSerializer
+    # permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        vendor_id = self.kwargs['pk']
+        qs = qs.filter(product__vendor_id=vendor_id)
+        # customer = models.Customer.objects.filter(id = )
+        customer_ids = qs.values_list('order__customer_id', flat=True).distinct()
+
+        # Filter and return the customers based on these IDs
+        customers = models.Customer.objects.filter(id__in=customer_ids)
+
+        return customers
+
 @csrf_exempt
 def vendor_login(request):
     username = request.POST.get('username')
