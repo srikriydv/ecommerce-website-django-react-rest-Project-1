@@ -10,6 +10,7 @@ function Dashboard(props) {
         totalAddress:0
     });
     const customerId = localStorage.getItem("customer_id");
+    const customerName = localStorage.getItem("customer_username")
 
     useEffect(() => {
         fetchData(baseUrl + "customer/" + customerId + "/dashboard/");
@@ -37,6 +38,7 @@ function Dashboard(props) {
                         <Sidebar />
                     </div>
                     <div className="col-md-9 col-12 mb-2">
+                    <h2>Welcome <Link className="text-danger" to='/customer/profile'>{customerName}</Link></h2>
                         <div className="row">
                             <div className="col-md-4 mb-2">
                                 <div className="card">

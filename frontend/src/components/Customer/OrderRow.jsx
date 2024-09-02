@@ -3,8 +3,10 @@ import { useState } from "react";
 import axios from "axios";
 
 function OrderRow(props) {
+
     const index = props.index;
     const item = props.item;
+    console.log(item, index);
     const baseUrl = "http://127.0.0.1:8000/api/";
     const [totalDownloads, setTotalDownloads] = useState(item.product.downloads)
 
@@ -52,16 +54,27 @@ function OrderRow(props) {
             <td>Rs {item.product.price}</td>
             <td>
                 <span>
-                    {item.order.order_status == true && (
+                    {item.order.payment_status == true && (
                         <i className="fa-solid fa-circle-check text-success"></i>
                     )}
-                    {item.order.order_status == false && (
+                    {item.order.payment_status == false && (
                         <i className="fa-solid fa-circle-check text-dark"></i>
                     )}
                 </span>
             </td>
             <td>
-                {item.order.order_status == true && (
+                <span>
+                    {item.order_status == true && (
+                        <i className="fa-solid fa-circle-check text-success"></i>
+                    )}
+                    {item.order_status == false && (
+                        <i className="fa-solid fa-circle-check text-dark"></i>
+                    )}
+                </span>
+            </td>
+
+            <td>
+                {item.order_status == true && (
                     <button onClick={()=>countDownloads(item.product.id)} className="btn btn-primary btn-sm">
                         Download <span className="badge text-dark bg-white">{totalDownloads}</span>
                     </button>

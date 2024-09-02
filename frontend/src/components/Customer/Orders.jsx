@@ -41,7 +41,8 @@ function Orders() {
                                             <th>Product</th>
                                             <th>Product Name</th>
                                             <th>Price</th>
-                                            <th>Status</th>
+                                            <th>Payment Status</th>
+                                            <th>Order Status</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>

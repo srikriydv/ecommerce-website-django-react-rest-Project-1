@@ -48,7 +48,7 @@ admin.site.register(models.ProductRating)
 admin.site.register(models.ProductImage)
 
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ['id','customer','order_time','order_status']
+    list_display = ['id','customer','order_time','payment_status']
 admin.site.register(models.Order, OrderAdmin)
 
 class WishlistAdmin(admin.ModelAdmin):

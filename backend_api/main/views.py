@@ -1,5 +1,5 @@
 from . import serializers
-from rest_framework import generics, permissions, pagination, viewsets
+from rest_framework import generics, permissions, pagination, viewsets, status
 from . import models
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
@@ -281,6 +281,50 @@ class OrderItemList(generics.ListCreateAPIView):
                 pass  # Ignore invalid values for vendor_id
         
         return qs
+    
+class UpdateOrderItemListStatus(generics.UpdateAPIView):
+    queryset = models.OrderItems.objects.all()
+    serializer_class = serializers.OrderItemSerializer
+
+    def update(self, request, *args, **kwargs):
+        order_id = kwargs.get('pk')
+        order_status_str = kwargs.get('order_status').lower()
+
+        # Convert 'true'/'false' string to boolean, handle invalid cases
+        if order_status_str == 'true':
+            order_status = True
+        elif order_status_str == 'false':
+            order_status = False
+        else:
+            return JsonResponse({
+                'bool': False,
+                'message': 'Invalid order status value. Use "true" or "false".'
+            }, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            # Filter and update the order item status
+            order_item = self.queryset.filter(id=order_id)
+            if order_item.exists():
+                order_item.update(order_status=order_status)
+                # Return success response
+                return JsonResponse({
+                    'bool': order_status,
+                    'message': 'Order status updated successfully.'
+                }, status=status.HTTP_200_OK)
+            else:
+                # Order item not found
+                return JsonResponse({
+                    'bool': False,
+                    'message': 'Order item not found.'
+                }, status=status.HTTP_404_NOT_FOUND)
+
+        except Exception as e:
+            # Return error response in case of exception
+            return JsonResponse({
+                'bool': False,
+                'message': f'Error updating order status: {str(e)}'
+            }, status=status.HTTP_400_BAD_REQUEST)
+
 
 class CustomerOrderItemList(generics.ListAPIView):
     queryset = models.OrderItems.objects.all()
@@ -305,9 +349,9 @@ class OrderDetail(generics.ListAPIView):
         return order_items
     
 @csrf_exempt
-def update_order_status(request, order_id):
+def update_payment_status(request, order_id):
     if request.method == 'POST':
-        updateRes = models.Order.objects.filter(id=order_id).update(order_status=True)
+        updateRes = models.Order.objects.filter(id=order_id).update(payment_status=True)
         msg={
             'bool':False,
         }

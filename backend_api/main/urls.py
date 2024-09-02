@@ -37,8 +37,9 @@ urlpatterns = [
     path('orders/',  views.OrderList.as_view()),
     path('order/<int:pk>/',  views.OrderDetail.as_view()),
     path('orderitems/',  views.OrderItemList.as_view()),
+    path('orderitem/<int:pk>/update-order-status/<str:order_status>/',  views.UpdateOrderItemListStatus.as_view()),
     path('customer/<int:pk>/orderitems/',  views.CustomerOrderItemList.as_view()),
-    path('update-order-status/<int:order_id>',  views.update_order_status, name='update_order_status'),
+    path('update-payment-status/<int:order_id>',  views.update_payment_status, name='update_payment_status'),
     path('update_product_download_count/<int:product_id>',  views.update_product_download_count, name='update_product_download_count'),
     #Wishlist
     path('wishlist/',  views.WishList.as_view()),

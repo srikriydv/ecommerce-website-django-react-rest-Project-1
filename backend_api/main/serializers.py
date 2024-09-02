@@ -77,7 +77,7 @@ class OrderSerializer(serializers.ModelSerializer):
     customer = CustomerSerializer
     class Meta:
         model = models.Order
-        fields = ['id','customer','order_status']
+        fields = ['id','customer','payment_status']
     
     def __init__(self, *args, **kwargs):
         super(OrderSerializer, self).__init__(*args, **kwargs)
@@ -88,14 +88,14 @@ class OrderItemSerializer(serializers.ModelSerializer):
     product = ProductDetailSerializer()
     class Meta:
         model = models.OrderItems
-        fields = ['id', 'order', 'product', 'qty', 'price']
+        fields = ['id', 'order', 'product', 'qty', 'price','order_status']
 
 class CustomOrderItemSerializer(serializers.ModelSerializer):
     order = OrderSerializer()
     product = ProductDetailSerializer()
     class Meta:
         model = models.OrderItems
-        fields = ['id', 'order', 'product', 'qty', 'price']
+        fields = ['id', 'order', 'product', 'qty', 'price','order_status']
     
 class OrderDetailSerializer(serializers.ModelSerializer):
     class Meta:

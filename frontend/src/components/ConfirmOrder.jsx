@@ -84,10 +84,10 @@ function ConfirmOrder() {
         }
     }
     function PaymentSuccess() {
-        updateOrderStatus(orderId, true);
+        updatePaymentStatus(orderId, true);
     }
-    function updateOrderStatus(order_id, order_status) {
-        console.log("Order id and order status = ", order_id, order_status);
+    function updatePaymentStatus(order_id, payment_status) {
+        console.log("Order id and order status = ", order_id, payment_status);
         // Submit Data
         axios.post(baseUrl + 'update-order-status/'+ orderId)
             .then(function (response) {
