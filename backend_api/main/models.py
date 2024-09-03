@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Count
 from django.contrib.auth.models import User
 
 # Create your models here.
@@ -10,6 +11,24 @@ class Vendor(models.Model):
 
     def __str__(self):
         return self.user.username
+    
+    #fetch daily order
+    @property
+    def show_chart_daily_orders(self):
+        orders = OrderItems.objects.filter(product__vendor = self).values('order__order_time__date').annotate(Count('id'))
+        dataList = []
+        countList = []
+        dataSet = {}
+
+        if orders:
+            for order in orders:
+                print(order)
+                dataList.append(order['order__order_time__date'])
+                countList.append(order['id__count'])
+                print(dataList)
+                print(countList)
+        dataSet = {'dates':dataList, 'data':countList}
+        return dataSet
 
 # Product Category
 class ProductCategory(models.Model):

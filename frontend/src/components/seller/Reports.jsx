@@ -1,4 +1,5 @@
 import SellerSidebar from "./SellerSidebar";
+import { Link } from "react-router-dom";
 
 function Reports() {
     
@@ -16,14 +17,14 @@ function Reports() {
                                 <div className="card">
                                     <div className="card-body text-center">
                                         <h4>Daily Reports</h4>
-                                        <h4><a href="" className="btn btn-info btn-sm">view</a></h4>
+                                        <h4><Link to='/seller/daily-reports' className="btn btn-info btn-sm">view</Link></h4>
                                     </div>
                                 </div>
                             </div>
                             <div className="col-md-4 mb-2">
                                 <div className="card">
                                     <div className="card-body text-center">
-                                        <h4>Monthly Repots</h4>
+                                        <h4>Monthly Reports</h4>
                                         <h4><a href="" className="btn btn-info btn-sm">view</a></h4>
                                     </div>
                                 </div>
