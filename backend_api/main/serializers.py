@@ -5,7 +5,7 @@ from . import models
 class VendorSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Vendor
-        fields = ['id','user', 'address']
+        fields = ['id','user', 'profile_img','address']
     
     def __init__(self, *args, **kwargs):
         super(VendorSerializer, self).__init__(*args, **kwargs)
@@ -14,11 +14,11 @@ class VendorSerializer(serializers.ModelSerializer):
 class VendorDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Vendor
-        fields = ['id', 'user', 'address','show_chart_daily_orders','show_chart_monthly_orders','show_chart_yearly_orders']
+        fields = ['id', 'user', 'mobile','address','profile_img','show_chart_daily_orders','show_chart_monthly_orders','show_chart_yearly_orders']
     
     def __init__(self, *args, **kwargs):
         super(VendorDetailSerializer, self).__init__(*args, **kwargs)
-        # self.Meta.depth = 1
+        self.Meta.depth = 1
 
 # product Serializer
 class ProductListSerializer(serializers.ModelSerializer):
