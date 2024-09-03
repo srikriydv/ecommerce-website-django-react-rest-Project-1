@@ -6,6 +6,7 @@ from django.http import JsonResponse
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from django.db import IntegrityError
+from rest_framework.response import Response
 
 # vendor View
 class VendorList(generics.ListCreateAPIView):
@@ -33,6 +34,32 @@ class vendorCustomers(generics.ListAPIView):
         customers = models.Customer.objects.filter(id__in=customer_ids)
 
         return customers
+    
+class VendorCustomerOrderlist(generics.ListCreateAPIView, generics.DestroyAPIView):
+    queryset = models.OrderItems.objects.all()
+    serializer_class = serializers.OrderItemSerializer
+    # permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        vendor_id = self.kwargs['vendor_id']
+        customer_id = self.kwargs['customer_id']
+        qs = qs.filter(product__vendor__id = vendor_id).filter(order__customer__id = customer_id)
+        
+        return qs
+    
+    def delete(self, request, *args, **kwargs):
+        vendor_id = self.kwargs.get('vendor_id')
+        customer_id = self.kwargs.get('customer_id')
+        
+        # Filter the objects to delete based on vendor_id and customer_id
+        order_items = self.get_queryset()
+
+        # If you want to delete all matching items:
+        deleted, _ = order_items.delete()
+
+        # Respond with appropriate status
+        return Response({'deleted': deleted}, status=status.HTTP_204_NO_CONTENT)
 
 @csrf_exempt
 def vendor_login(request):
@@ -266,7 +293,7 @@ def customer_register(request):
     return JsonResponse(msg)
 
 # Order View
-class OrderList(generics.ListCreateAPIView):
+class OrderList(generics.ListCreateAPIView, generics.DestroyAPIView):
     queryset = models.Order.objects.all()
     serializer_class = serializers.OrderSerializer
     # permission_classes = [permissions.IsAuthenticated]
@@ -280,6 +307,10 @@ class OrderList(generics.ListCreateAPIView):
         
         # Save the new order with the provided customer
         serializer.save(customer_id=customer_id)
+
+    def delete(self):
+        customer_id
+        return qs
 
 class OrderItemList(generics.ListCreateAPIView):
     queryset = models.OrderItems.objects.all()

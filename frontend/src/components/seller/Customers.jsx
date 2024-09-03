@@ -1,5 +1,7 @@
+import { Link } from "react-router-dom";
 import SellerSidebar from "./SellerSidebar";
 import { useState,useEffect } from "react";
+import axios from "axios";
 
 function Customers() {
     const baseUrl = 'http://127.0.0.1:8000/api';
@@ -16,9 +18,22 @@ function Customers() {
             .then(response => response.json())
             .then((data) => {
                 console.log(data.results);
-                setOrderItems(data.results);
+                setOrderItems(data.results); 
                 console.log(orderItems);
             })
+    }
+
+    const handleDeleteCustomerOrder = (customer_id) =>{
+        axios.delete(`${baseUrl}/vendor/${vendor_id}/customer/${customer_id}/orders/`)
+            .then(() => {
+                // Remove item from the state
+                console.log("Customer Removed");
+                alert("Customer Removed")
+                window.location.reload();
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     }
 
     return (
@@ -52,8 +67,8 @@ function Customers() {
                                             <td>{item.user.email}</td>
                                             <td>{item.mobile}</td>
                                             <td>
-                                                <button className="btn btn-primary btn-sm">Orders</button>
-                                                <button className="btn btn-danger btn-sm ms-2">Remove from List</button>
+                                                <Link to={`/seller/customer/${item.id}/orders`} className="btn btn-primary btn-sm">Orders</Link>
+                                                <button role="button" onClick={()=>handleDeleteCustomerOrder(item.id)} className="btn btn-danger btn-sm ms-2">Remove from List</button>
                                             </td>
                                         </tr>
                                         )
