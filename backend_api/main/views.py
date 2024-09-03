@@ -7,6 +7,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from rest_framework.response import Response
+from django.contrib.auth.hashers import make_password
 
 # vendor View
 class VendorList(generics.ListCreateAPIView):
@@ -60,6 +61,17 @@ class VendorCustomerOrderlist(generics.ListCreateAPIView, generics.DestroyAPIVie
 
         # Respond with appropriate status
         return Response({'deleted': deleted}, status=status.HTTP_204_NO_CONTENT)
+    
+@csrf_exempt
+def vendor_update_password(request, vendor_id):
+    password = request.POST.get('password')
+    vendor = models.Vendor.objects.get(id=vendor_id)
+    user = vendor.user
+    user.password = make_password(password)
+    user.save()
+    msg = {'bool': True , 'msg' : 'Password has been changed'}
+    return JsonResponse(msg)
+
     
 # Vendor Dashboard
 @csrf_exempt
@@ -230,6 +242,16 @@ class CustomerUpdate(generics.RetrieveUpdateDestroyAPIView):
 class UserDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = models.User.objects.all()
     serializer_class = serializers.UserSerializer
+
+@csrf_exempt
+def customer_update_password(request, customer_id):
+    password = request.POST.get('password')
+    customer = models.Customer.objects.get(id=customer_id)
+    user = customer.user
+    user.password = make_password(password)
+    user.save()
+    msg = {'bool': True , 'msg' : 'Password has been changed'}
+    return JsonResponse(msg)
 
 @csrf_exempt
 def customer_login(request):

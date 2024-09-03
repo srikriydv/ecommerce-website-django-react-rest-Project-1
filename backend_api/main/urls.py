@@ -15,6 +15,7 @@ urlpatterns = [
     path('vendor/register/',  views.vendor_register, name='vendor_register'),
     path('vendor/login/',  views.vendor_login, name='vendor_login'),
     path('vendor/<int:pk>/dashboard/',  views.vendor_dashboard, name='vendor_dashboard'),
+    path('vendor/<int:vendor_id>/update-password/',  views.vendor_update_password, name='vendor_update_password'),
     # Products
     path('products/',  views.ProductList.as_view()),
     path('products/<str:tag>',  views.TagProductList.as_view()),
@@ -36,6 +37,7 @@ urlpatterns = [
     path('customer/<int:pk>/address/',  views.CustomerAddressList.as_view()),
     path('make-default-address/<int:pk>/',  views.mark_default_address, name='mark_default_address'),
     path('customer/<int:pk>/dashboard/',  views.customer_dashboard, name='customer_dashboard'),
+    path('customer/<int:customer_id>/update-password/',  views.customer_update_password, name='customer_update_password'),
     #Order
     path('orders/',  views.OrderList.as_view()),
     path('order/<int:pk>/',  views.OrderDetail.as_view()),
