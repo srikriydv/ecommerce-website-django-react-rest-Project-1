@@ -15,6 +15,15 @@ class VendorList(generics.ListCreateAPIView):
     serializer_class = serializers.VendorSerializer
     # permission_classes = [permissions.IsAuthenticated]
 
+    def get_queryset(self):
+        qs = super().get_queryset()
+        
+        if 'fetch_limit' in self.request.GET:
+            limit = int(self.request.GET['fetch_limit'])
+            qs = qs[:limit]
+
+        return qs
+
 class vendorDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = models.Vendor.objects.all()
     serializer_class = serializers.VendorDetailSerializer
@@ -190,6 +199,15 @@ class ProductList(generics.ListCreateAPIView):
                 qs = qs.filter(vendor_id=vendor_id)
             except ValueError:
                 pass  # Ignore invalid values for vendor_id
+
+        if 'vendor_cat' in self.request.GET:
+            try:
+                vendor_cat = int(self.request.GET['vendor_cat'])
+                # Correct: Filter products by vendor and category
+                qs = models.Product.objects.filter(vendor_id = vendor_cat).distinct('category')
+
+            except ValueError:
+                pass
         
         return qs
 

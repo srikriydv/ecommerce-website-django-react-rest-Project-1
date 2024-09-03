@@ -2,17 +2,20 @@ import React from "react";
 import logo from "../asset/logo.avif";
 import { Link } from "react-router-dom";
 import SingleProduct from "./SingleProduct";
+import SingleSeller from "./SingleSeller";
 import { useState, useEffect } from "react";
 import Testimonials from "./Testimonials";
 
 function Home() {
   const baseUrl = "http://127.0.0.1:8000/api";
   const [Products, setProducts] = useState([]);
+  const [Vendors, setVendors] = useState([]);
   const [ProductRating, setProductRating] = useState([]);
 
   useEffect(() => {
     fetchData(baseUrl + "/products/?fetch_limit=4");
     fetchRating(baseUrl + "/productrating");
+    fetchSellers(baseUrl + "/vendors/?fetch_limit=4")
   }, []);
 
   function fetchData(baseurl) {
@@ -27,6 +30,13 @@ function Home() {
       .then((response) => response.json())
       .then((data) => {
         setProductRating(data.results);
+      });
+  }
+  function fetchSellers(baseurl) {
+    fetch(baseurl) // api for the get request
+      .then((response) => response.json())
+      .then((data) => {
+        setVendors(data.results);
       });
   }
 
@@ -192,62 +202,15 @@ function Home() {
         {/* Popular Seller  */}
         <h3 className="mb-4">
           Popular Sellers
-          <a href="#" className="float-end btn btn-dark">
+          <Link to="/sellers" className="float-end btn btn-dark">
             View All Sellers <i className="fa-solid fa-arrow-right-long"></i>
-          </a>
+          </Link>
         </h3>
         <div className="row">
           {/* Seller Box */}
-          <div className="col-12 col-md-3 mb-4">
-            <div className="card">
-              <img src={logo} className="card-img-top" alt="..." />
-              <div className="card-body">
-                <h4 className="card-title">Seller title</h4>
-              </div>
-              <div className="card-footer">
-                Catagories: <a href="#">Python</a> <a href="#">JavaScript</a>
-              </div>
-            </div>
-          </div>
-          {/* Seller Box End  */}
-          {/* Seller Box */}
-          <div className="col-12 col-md-3 mb-4">
-            <div className="card">
-              <img src={logo} className="card-img-top" alt="..." />
-              <div className="card-body">
-                <h4 className="card-title">Seller title</h4>
-              </div>
-              <div className="card-footer">
-                Catagories: <a href="#">Python</a>
-              </div>
-            </div>
-          </div>
-          {/* Seller Box End  */}
-          {/* Seller Box */}
-          <div className="col-12 col-md-3 mb-4">
-            <div className="card">
-              <img src={logo} className="card-img-top" alt="..." />
-              <div className="card-body">
-                <h4 className="card-title">Seller title</h4>
-              </div>
-              <div className="card-footer">
-                Catagories: <a href="#">JavaScript</a>
-              </div>
-            </div>
-          </div>
-          {/* Seller Box End  */}
-          {/* Seller Box */}
-          <div className="col-12 col-md-3 mb-4">
-            <div className="card">
-              <img src={logo} className="card-img-top" alt="..." />
-              <div className="card-body">
-                <h4 className="card-title">Seller title</h4>
-              </div>
-              <div className="card-footer">
-                Catagories: <a href="#">GoLang</a> <a href="#">Swift</a>
-              </div>
-            </div>
-          </div>
+          {Vendors.map((vendor, index) => (
+            <SingleSeller key={index} vendor={vendor} />
+          ))}
           {/* Seller Box End  */}
         </div>
         {/* End Popular Catagories */}
@@ -273,7 +236,7 @@ function Home() {
           </div>
           <div className="carousel-inner">
             {ProductRating.map((item, index) => (
-              <Testimonials index={index} item={item} />
+              <Testimonials index={index} item={item} key={index} />
             ))}
           </div>
           <button

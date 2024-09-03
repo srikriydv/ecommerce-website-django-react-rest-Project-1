@@ -27,6 +27,7 @@ import AddressList from "./components/Customer/AddressList.jsx";
 import AddAddress from "./components/Customer/AddAddress.jsx";
 import UpdateAddress from "./components/Customer/UpdateAddress.jsx";
 // Seller Panel
+import AllSellers from "./components/AllSellers.jsx";
 import SellerRegister from "./components/seller/SellerRegister.jsx";
 import SellerLogin from "./components/seller/SellerLogin.jsx";
 import SellerLogout from "./components/seller/VendorLogout.jsx";
@@ -79,6 +80,7 @@ function App() {
           <Route path="/customer/update-address/:address_id" element={<UpdateAddress />} />
           <Route path="/customer/review/product/:product_id/:product_name" element={<AddReview />} />
           {/* Seller routes */}
+          <Route path="/sellers" element={<AllSellers />} />
           <Route path="/seller/register" element={<SellerRegister />} />
           <Route path="/seller/login" element={<SellerLogin />} />
           <Route path="/seller/logout" element={<SellerLogout />} />
