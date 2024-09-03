@@ -34,7 +34,7 @@ function Home() {
         <div className="row mb-4">
           {/* Product Box */}
           {
-            Products.map((product) => <SingleProduct product={product} />)
+            Products.map((product, index) => <SingleProduct key={index} product={product} />)
           }
           {/* End Latest Product */}
         </div>

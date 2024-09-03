@@ -120,11 +120,11 @@ class CustomerAddressSerializer(serializers.ModelSerializer):
 class ProductRatingSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.ProductRating
-        fields = ['id', 'customer', 'product', 'rating', 'reviews', 'add_time']
+        fields = ['id', 'customer', 'product', 'rating', 'review']
     
     def __init__(self, *args, **kwargs):
         super(ProductRatingSerializer, self).__init__(*args, **kwargs)
-        self.Meta.depth = 1
+        # self.Meta.depth = 1
 
 # Catagory Serializer
 class CategorySerializer(serializers.ModelSerializer):

@@ -10,23 +10,23 @@ function OrderRow(props) {
     const baseUrl = "http://127.0.0.1:8000/api/";
     const [totalDownloads, setTotalDownloads] = useState(item.product.downloads)
 
-    const countDownloads = (product_id) =>{
+    const countDownloads = (product_id) => {
         // Submit Data
-        axios.post(baseUrl+'update_product_download_count/'+product_id)
-        .then(function (response){
-            console.log("axios response log", response);
-            console.log("product file name", item.product.product_file);
-            if(response.data.bool == true){
-                setTotalDownloads(++item.product.downloads);
-                window.open(
-                    item.product.product_file, // The URL to open
-                    '_blank'                   // The target where to open the URL, '_blank' opens it in a new tab or window
-                );
-            }
-        })
-        .catch(function (error){
-            console.log(error);
-        })
+        axios.post(baseUrl + 'update_product_download_count/' + product_id)
+            .then(function (response) {
+                console.log("axios response log", response);
+                console.log("product file name", item.product.product_file);
+                if (response.data.bool == true) {
+                    setTotalDownloads(++item.product.downloads);
+                    window.open(
+                        item.product.product_file, // The URL to open
+                        '_blank'                   // The target where to open the URL, '_blank' opens it in a new tab or window
+                    );
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
     }
 
     return (
@@ -75,10 +75,13 @@ function OrderRow(props) {
 
             <td>
                 {item.order_status == true && (
-                    <button onClick={()=>countDownloads(item.product.id)} className="btn btn-primary btn-sm">
+                    <button onClick={() => countDownloads(item.product.id)} className="btn btn-primary btn-sm">
                         Download <span className="badge text-dark bg-white">{totalDownloads}</span>
                     </button>
                 )}
+            </td>
+            <td>
+                <Link to={`/customer/review/product/${item.product.id}/${item.product.title}`} className="btn btn-info btn-sm">Add Review</Link>
             </td>
         </tr>
     )

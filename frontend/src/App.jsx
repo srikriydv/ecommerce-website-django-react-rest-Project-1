@@ -11,6 +11,7 @@ import AllProducts from "./components/AllProducts.jsx";
 import ProductDetail from "./components/ProductDetail.jsx";
 import Checkout from "./components/Checkout.jsx";
 import ConfirmOrder from "./components/ConfirmOrder.jsx";
+import AddReview from "./components/Customer/AddReview.jsx";
 // Customer Panel
 import Register from "./components/Customer/Register.jsx";
 import Login from "./components/Customer/Login.jsx";
@@ -76,6 +77,7 @@ function App() {
           <Route path="/customer/addresses" element={<AddressList />} />
           <Route path="/customer/add-address" element={<AddAddress />} />
           <Route path="/customer/update-address/:address_id" element={<UpdateAddress />} />
+          <Route path="/customer/review/product/:product_id/:product_name" element={<AddReview />} />
           {/* Seller routes */}
           <Route path="/seller/register" element={<SellerRegister />} />
           <Route path="/seller/login" element={<SellerLogin />} />
