@@ -25,16 +25,14 @@ function Reports() {
                                 <div className="card">
                                     <div className="card-body text-center">
                                         <h4>Monthly Reports</h4>
-                                        <h4><a href="" className="btn btn-info btn-sm">view</a></h4>
-                                    </div>
+                                        <h4><Link to='/seller/monthly-reports' className="btn btn-info btn-sm">view</Link></h4>                                    </div>
                                 </div>
                             </div>
                             <div className="col-md-4 mb-2">
                                 <div className="card">
                                     <div className="card-body text-center">
                                         <h4>Yearly Reports</h4>
-                                        <h4><a href="" className="btn btn-info btn-sm">view</a></h4>
-                                    </div>
+                                        <h4><Link to='/seller/yearly-reports' className="btn btn-info btn-sm">view</Link></h4>                                    </div>
                                 </div>
                             </div>
                         </div>

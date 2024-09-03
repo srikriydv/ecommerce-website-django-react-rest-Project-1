@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models import Count
 from django.contrib.auth.models import User
+import datetime
 
 # Create your models here.
 class Vendor(models.Model):
@@ -24,6 +25,46 @@ class Vendor(models.Model):
             for order in orders:
                 print(order)
                 dataList.append(order['order__order_time__date'])
+                countList.append(order['id__count'])
+                print(dataList)
+                print(countList)
+        dataSet = {'dates':dataList, 'data':countList}
+        return dataSet
+
+    #fetch Monthly order
+    @property
+    def show_chart_monthly_orders(self):
+        orders = OrderItems.objects.filter(product__vendor = self).values('order__order_time__month').annotate(Count('id'))
+        dataList = []
+        countList = []
+        dataSet = {}
+
+        if orders:
+            for order in orders:
+                print(order)
+                monthinteger = order['order__order_time__month']
+                month = datetime.date(1900, monthinteger, 1).strftime('%B')
+                dataList.append(month)
+                countList.append(order['id__count'])
+                print(dataList)
+                print(countList)
+        dataSet = {'dates':dataList, 'data':countList}
+        return dataSet
+    
+    #fetch Yearly order
+    @property
+    def show_chart_yearly_orders(self):
+        orders = OrderItems.objects.filter(product__vendor = self).values('order__order_time__year').annotate(Count('id'))
+        dataList = []
+        countList = []
+        dataSet = {}
+
+        if orders:
+            for order in orders:
+                print(order)
+                yearinteger = order['order__order_time__year']
+                year = datetime.date(yearinteger, 1, 1).strftime('%Y')
+                dataList.append(year)
                 countList.append(order['id__count'])
                 print(dataList)
                 print(countList)

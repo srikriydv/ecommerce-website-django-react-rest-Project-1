@@ -40,6 +40,8 @@ import VendorProfile from "./components/seller/VendorProfile.jsx";
 import VendorChangePassword from "./components/seller/VendorChangePassword.jsx";
 import CustomerOrders from "./components/seller/CustomerOrders.jsx";
 import DailyReports from "./components/seller/DailyReports.jsx";
+import MonthlyReports from "./components/seller/MonthlyReports.jsx";
+import YearlyReports from "./components/seller/YearlyReports.jsx";
 
 import { CartContext } from "./Context.jsx";
 const checkCart = localStorage.getItem('cartData') || '[]';
@@ -89,6 +91,8 @@ function App() {
           <Route path="/seller/profile" element={<VendorProfile />} />
           <Route path="/seller/change-password" element={<VendorChangePassword />} />
           <Route path="/seller/daily-reports" element={<DailyReports />} />
+          <Route path="/seller/monthly-reports" element={<MonthlyReports />} />
+          <Route path="/seller/yearly-reports" element={<YearlyReports />} />
         </Routes>
       <Footer />
       </CartContext.Provider>
