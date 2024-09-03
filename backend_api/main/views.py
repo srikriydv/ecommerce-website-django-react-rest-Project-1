@@ -60,6 +60,19 @@ class VendorCustomerOrderlist(generics.ListCreateAPIView, generics.DestroyAPIVie
 
         # Respond with appropriate status
         return Response({'deleted': deleted}, status=status.HTTP_204_NO_CONTENT)
+    
+# Vendor Dashboard
+@csrf_exempt
+def vendor_dashboard(request, pk):
+    totalProducts = models.Product.objects.filter(vendor__id=pk).count()
+    totalOrders = models.OrderItems.objects.filter(product__vendor__id=pk).count()
+    totalCustomers = models.OrderItems.objects.filter(product__vendor__id=pk).values('order__customer').distinct().count()
+    msg={
+        'totalProducts':totalProducts,
+        'totalOrders':totalOrders,
+        'totalCustomers':totalCustomers
+    }
+    return JsonResponse(msg)
 
 @csrf_exempt
 def vendor_login(request):

@@ -1,7 +1,34 @@
+import { Link } from "react-router-dom";
 import SellerSidebar from "./SellerSidebar";
+import { useState, useEffect } from "react";
 
 function SellerDashboard(props) {
+    const baseUrl = 'http://127.0.0.1:8000/api';
+    const [totalCounts, setTotalCounts] = useState({
+        'totalProducts': '',
+        'totalOrders': '',
+        'totalCustomers': '',
+    });
+    const vendor_id = localStorage.getItem('vendor_id');
 
+    useEffect(() => {
+        fetchData(baseUrl + '/vendor/' + vendor_id + '/dashboard/');
+    }, []);
+
+    function fetchData(baseurl) {
+        console.log(baseurl)
+        fetch(baseurl) // api for the get request
+            .then(response => response.json())
+            .then((data) => {
+                console.log(data);
+                setTotalCounts({
+                    'totalProducts': data.totalProducts,
+                    'totalOrders': data.totalOrders,
+                    'totalCustomers': data.totalCustomers,
+                });
+                console.log(setTotalCounts);
+            })
+    }
 
     return (
         <>
@@ -17,7 +44,7 @@ function SellerDashboard(props) {
                                 <div className="card">
                                     <div className="card-body text-center">
                                         <h4>Total Products</h4>
-                                        <h4><a href="">20</a></h4>
+                                        <h4><Link to='/seller/products'>{totalCounts.totalProducts}</Link></h4>
                                     </div>
                                 </div>
                             </div>
@@ -25,7 +52,7 @@ function SellerDashboard(props) {
                                 <div className="card">
                                     <div className="card-body text-center">
                                         <h4>Total Orders</h4>
-                                        <h4><a href="">25</a></h4>
+                                        <h4><Link to='/seller/orders'>{totalCounts.totalOrders}</Link></h4>
                                     </div>
                                 </div>
                             </div>
@@ -33,7 +60,7 @@ function SellerDashboard(props) {
                                 <div className="card">
                                     <div className="card-body text-center">
                                         <h4>Total Customers</h4>
-                                        <h4><a href="">120</a></h4>
+                                        <h4><Link to='/seller/customers'>{totalCounts.totalCustomers}</Link></h4>
                                     </div>
                                 </div>
                             </div>
