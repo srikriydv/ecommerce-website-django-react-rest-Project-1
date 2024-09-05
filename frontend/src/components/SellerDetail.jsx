@@ -50,8 +50,8 @@ function SellerDetail() {
       </div>
 
       {/* Vendor Product */}
-      <h3 className="row mt-5">{vendorData.username} Products</h3>
-      <div className="row">
+      <h3 className="row mt-5 font-weight-bold text-dark display-5">{vendorData.username} Products</h3>
+      <div className="row mt-5">
         {productData.map((product, index) => (
           <SingleProduct key={index} product={product} />
         ))}

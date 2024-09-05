@@ -1,5 +1,5 @@
 from django.db import models
-from django.db.models import Count
+from django.db.models import Count, Sum
 from django.contrib.auth.models import User
 import datetime
 
@@ -12,6 +12,16 @@ class Vendor(models.Model):
 
     def __str__(self):
         return self.user.username
+    
+    @property
+    def total_products(self):
+        total = Product.objects.filter(vendor=self).count()
+        return total or 0
+    
+    @property
+    def total_downloads(self):
+        total = Product.objects.filter(vendor=self).aggregate(total_downloads=Sum('downloads'))
+        return total['total_downloads'] or 0
     
     #fetch daily order
     @property
@@ -73,15 +83,26 @@ class Vendor(models.Model):
 
 # Product Category
 class ProductCategory(models.Model):
-
     title = models.CharField(max_length=200)
     details = models.TextField(null=True)
+    image = models.ImageField(upload_to='category_imgs/', null=True)
 
     def __str__(self):
         return self.title
     
     class Meta:
         verbose_name_plural = 'Product Catagories'
+
+    @property
+    def total_downloads(self):
+        total = Product.objects.filter(category=self).aggregate(total_downloads=Sum('downloads'))
+        return total['total_downloads'] or 0
+    
+    @property
+    def total_products(self):
+        total = Product.objects.filter(category=self).count()
+        return total or 0
+
     
 # Product
 class Product(models.Model):
@@ -106,7 +127,6 @@ class Product(models.Model):
             return self.tags.split(',')
         return []
     
-
     
 # Customer Model
 class Customer(models.Model):

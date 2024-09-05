@@ -22,20 +22,26 @@ function SingleSeller(props) {
   return (
     <>
       <div className="col-12 col-md-3 mb-4">
-              <div className="card">
-                <Link to={`/seller/${vendor.id}`} >
-                <img src={vendor.profile_img} className="card-img-top" alt="..." />
-                </Link>
-                <div className="card-body">
-                  <Link to={`/seller/${vendor.id}`}><h3 className="card-title">{vendor.user.username}</h3></Link>
-                </div>
-                <div className="card-footer">
-                  Catagories: {Catagories.map((cat, index)=><Link to={`/category/${cat.slug}/${cat.category.id}`}>
-                  {cat.category.title}
-                </Link>)}
-                </div>
-              </div>
+        <div className="card">
+          <Link to={`/seller/${vendor.id}`} >
+            <img src={vendor.profile_img} className="card-img-top" alt="..." />
+          </Link>
+          <div className="card-body">
+            <Link to={`/seller/${vendor.id}`}><h3 className="card-title">{vendor.user.username}</h3></Link>
+          </div>
+          <div className="card-footer">
+            Catagories: {Catagories.map((cat, index) => <Link to={`/category/${cat.slug}/${cat.category.id}`}>
+              {cat.category.title}
+            </Link>)}
+            <div>
+              Products: {vendor.total_products}
             </div>
+            <div>
+              Total Downloads: {vendor.total_downloads}
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   );
 }

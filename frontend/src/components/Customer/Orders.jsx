@@ -44,6 +44,7 @@ function Orders() {
                                             <th>Payment Status</th>
                                             <th>Order Status</th>
                                             <th>Action</th>
+                                            <th>Add Review</th>
                                         </tr>
                                     </thead>
                                     <tbody className="text-center">

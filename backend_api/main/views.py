@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 from django.db import IntegrityError
 from rest_framework.response import Response
 from django.contrib.auth.hashers import make_password
+from django.db.models import Count
 
 # vendor View
 class VendorList(generics.ListCreateAPIView):
@@ -20,6 +21,10 @@ class VendorList(generics.ListCreateAPIView):
         
         if 'fetch_limit' in self.request.GET:
             limit = int(self.request.GET['fetch_limit'])
+            qs = qs.annotate(downloads=Count('product'))
+            print(qs)
+            qs = qs.order_by('-downloads', '-id')
+            print(qs)
             qs = qs[:limit]
 
         return qs
@@ -208,6 +213,11 @@ class ProductList(generics.ListCreateAPIView):
 
             except ValueError:
                 pass
+
+        if 'pop' in self.request.GET:
+            limit = int(self.request.GET['pop'])
+            qs = qs.order_by('-downloads', '-id')
+            qs = qs[:limit]
         
         return qs
 
@@ -533,6 +543,17 @@ class CategoryList(generics.ListCreateAPIView):
     queryset = models.ProductCategory.objects.all()
     serializer_class = serializers.CategorySerializer
     # permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        if 'popular' in self.request.GET:
+            limit = int(self.request.GET['popular'])
+            qs = qs.annotate(downloads=Count('category_products'))  # Use the correct related name
+            print(qs.query)  # Debugging the SQL query
+            qs = qs.order_by('-downloads', '-id')
+            print(qs.query)  # Debugging the SQL query
+            qs = qs[:limit]
+        return qs
 
 class CategoryDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = models.ProductCategory.objects.all()

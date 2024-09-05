@@ -5,10 +5,13 @@ import SingleProduct from "./SingleProduct";
 import SingleSeller from "./SingleSeller";
 import { useState, useEffect } from "react";
 import Testimonials from "./Testimonials";
+import SingleCategories from "./SingleCategories";
 
 function Home() {
   const baseUrl = "http://127.0.0.1:8000/api";
   const [Products, setProducts] = useState([]);
+  const [PopProducts, setPopProducts] = useState([]);
+  const [PopCategories, setPopCategories] = useState([]);
   const [Vendors, setVendors] = useState([]);
   const [ProductRating, setProductRating] = useState([]);
 
@@ -16,6 +19,8 @@ function Home() {
     fetchData(baseUrl + "/products/?fetch_limit=4");
     fetchRating(baseUrl + "/productrating");
     fetchSellers(baseUrl + "/vendors/?fetch_limit=4")
+    fetchPopularProduct(baseUrl + "/products/?pop=4")
+    fetchPopularCategories(baseUrl + "/categories/?popular=4")
   }, []);
 
   function fetchData(baseurl) {
@@ -23,6 +28,20 @@ function Home() {
       .then((response) => response.json())
       .then((data) => {
         setProducts(data.results);
+      });
+  }
+  function fetchPopularProduct(baseurl) {
+    fetch(baseurl) // api for the get request
+      .then((response) => response.json())
+      .then((data) => {
+        setPopProducts(data.results);
+      });
+  }
+  function fetchPopularCategories(baseurl) {
+    fetch(baseurl) // api for the get request
+      .then((response) => response.json())
+      .then((data) => {
+        setPopCategories(data.results);
       });
   }
   function fetchRating(baseurl) {
@@ -66,48 +85,9 @@ function Home() {
         </h3>
         <div className="row">
           {/* Catagory Box */}
-          <div className="col-12 col-md-3 mb-4">
-            <div className="card">
-              <img src={logo} className="card-img-top" alt="..." />
-              <div className="card-body">
-                <h4 className="card-title">Catagory title</h4>
-              </div>
-              <div className="card-footer">Product Downloads: 2356</div>
-            </div>
-          </div>
-          {/* Catagory Box End  */}
-          {/* Catagory Box */}
-          <div className="col-12 col-md-3 mb-4">
-            <div className="card">
-              <img src={logo} className="card-img-top" alt="..." />
-              <div className="card-body">
-                <h4 className="card-title">Catagory title</h4>
-              </div>
-              <div className="card-footer">Product Downloads: 2356</div>
-            </div>
-          </div>
-          {/* Catagory Box End  */}
-          {/* Catagory Box */}
-          <div className="col-12 col-md-3 mb-4">
-            <div className="card">
-              <img src={logo} className="card-img-top" alt="..." />
-              <div className="card-body">
-                <h4 className="card-title">Catagory title</h4>
-              </div>
-              <div className="card-footer">Product Downloads: 2356</div>
-            </div>
-          </div>
-          {/* Catagory Box End  */}
-          {/* Catagory Box */}
-          <div className="col-12 col-md-3 mb-4">
-            <div className="card">
-              <img src={logo} className="card-img-top" alt="..." />
-              <div className="card-body">
-                <h4 className="card-title">Catagory title</h4>
-              </div>
-              <div className="card-footer">Product Downloads: 2356</div>
-            </div>
-          </div>
+          {PopCategories.map((category, index)=>(
+            <SingleCategories key={index} category={category} />
+          ))}
           {/* Catagory Box End  */}
         </div>
         {/* End Popular Catagories */}
@@ -121,80 +101,9 @@ function Home() {
         </h3>
         <div className="row">
           {/* Product Box */}
-          <div className="col-12 col-md-3 mb-4">
-            <div className="card">
-              <img src={logo} className="card-img-top" alt="..." />
-              <div className="card-body">
-                <h4 className="card-title">Product title</h4>
-                <h5 className="card-title text-muted">Price: Rs. 500</h5>
-              </div>
-              <div className="card-footer">
-                <button title="Add to Cart" className="btn btn-success">
-                  <i className="fa-solid fa-cart-shopping"></i>
-                </button>
-                <button title="Add to Wishlist" className="btn btn-danger ms-1">
-                  <i className="fa fa-heart"></i>
-                </button>
-              </div>
-            </div>
-          </div>
-          {/* Product Box End  */}
-          {/* Product Box */}
-          <div className="col-12 col-md-3 mb-4">
-            <div className="card">
-              <img src={logo} className="card-img-top" alt="..." />
-              <div className="card-body">
-                <h4 className="card-title">Product title</h4>
-                <h5 className="card-title text-muted">Price: Rs. 500</h5>
-              </div>
-              <div className="card-footer">
-                <button title="Add to Cart" className="btn btn-success">
-                  <i className="fa-solid fa-cart-shopping"></i>
-                </button>
-                <button title="Add to Wishlist" className="btn btn-danger ms-1">
-                  <i className="fa fa-heart"></i>
-                </button>
-              </div>
-            </div>
-          </div>
-          {/* Product Box End  */}
-          {/* Product Box */}
-          <div className="col-12 col-md-3 mb-4">
-            <div className="card">
-              <img src={logo} className="card-img-top" alt="..." />
-              <div className="card-body">
-                <h4 className="card-title">Product title</h4>
-                <h5 className="card-title text-muted">Price: Rs. 500</h5>
-              </div>
-              <div className="card-footer">
-                <button title="Add to Cart" className="btn btn-success">
-                  <i className="fa-solid fa-cart-shopping"></i>
-                </button>
-                <button title="Add to Wishlist" className="btn btn-danger ms-1">
-                  <i className="fa fa-heart"></i>
-                </button>
-              </div>
-            </div>
-          </div>
-          {/* Product Box End  */}
-          {/* Product Box */}
-          <div className="col-12 col-md-3 mb-4">
-            <div className="card">
-              <img src={logo} className="card-img-top" alt="..." />
-              <div className="card-body">
-                <h4 className="card-title">Product title</h4>
-                <h5 className="card-title text-muted">Price: Rs. 500</h5>
-              </div>
-              <div className="card-footer">
-                <button title="Add to Cart" className="btn btn-success">
-                  <i className="fa-solid fa-cart-shopping"></i>
-                </button>
-                <button title="Add to Wishlist" className="btn btn-danger ms-1">
-                  <i className="fa fa-heart"></i>
-                </button>
-              </div>
-            </div>
-          </div>
+          {PopProducts.map((product, index)=>(
+            <SingleProduct key={index} product={product} />
+          ))}
           {/* Product Box End  */}
         </div>
         {/* End Popular Product */}

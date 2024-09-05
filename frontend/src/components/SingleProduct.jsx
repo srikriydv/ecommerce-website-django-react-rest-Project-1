@@ -15,7 +15,7 @@ function SingleProduct(props) {
       });
   }
 
-  console.log("produc image url",props.product.image);
+  console.log("produc image url", props.product.image);
   return (
     <>
       <div className="col-12 col-md-3 mb-4">
@@ -32,12 +32,17 @@ function SingleProduct(props) {
             <button title="Add to Wishlist" className="btn btn-danger ms-1">
               <i className="fa fa-heart"></i>
             </button>
-            <hr />
-            <div>
-                  Catagories: {Catagories.map((cat, index)=><Link to={`/category/${cat.slug}/${cat.category.id}`}>
+            {/* <hr /> */}
+            <div className='card-footer mt-2'>
+              <div>
+                Catagories: {Catagories.map((cat, index) => <Link to={`/category/${cat.slug}/${cat.category.id}`}>
                   {cat.category.title}
                 </Link>)}
-                </div>
+              </div>
+              <div>
+                Downloads: {props.product.downloads}
+              </div>
+            </div>
           </div>
         </div>
       </div>

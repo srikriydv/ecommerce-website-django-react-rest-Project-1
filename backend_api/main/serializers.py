@@ -5,7 +5,7 @@ from . import models
 class VendorSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Vendor
-        fields = ['id','user', 'profile_img','address']
+        fields = ['id','user', 'profile_img','address','total_products', 'total_downloads']
     
     def __init__(self, *args, **kwargs):
         super(VendorSerializer, self).__init__(*args, **kwargs)
@@ -129,7 +129,7 @@ class CustomerAddressSerializer(serializers.ModelSerializer):
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = models.ProductCategory
-        fields = ['id','title', 'details']
+        fields = ['id','title', 'details','image','total_downloads','total_products']
     
     def __init__(self, *args, **kwargs):
         super(CategorySerializer, self).__init__(*args, **kwargs)
