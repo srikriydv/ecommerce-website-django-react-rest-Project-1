@@ -12,6 +12,7 @@ import ProductDetail from "./components/ProductDetail.jsx";
 import Checkout from "./components/Checkout.jsx";
 import ConfirmOrder from "./components/ConfirmOrder.jsx";
 import AddReview from "./components/Customer/AddReview.jsx";
+import SellerDetail from "./components/SellerDetail.jsx";
 // Customer Panel
 import Register from "./components/Customer/Register.jsx";
 import Login from "./components/Customer/Login.jsx";
@@ -66,6 +67,7 @@ function App() {
           <Route path="/confirm-order" element={<ConfirmOrder />} />
           <Route path="/order/success" element={<OrderSuccess />} />
           <Route path="/order/failure" element={<OrderFailure />} />
+          <Route path="/seller/:vendor_id" element={<SellerDetail />} />
           {/* customer routes */}
           <Route path="/customer/register" element={<Register/>} />
           <Route path="/customer/login" element={<Login/>} />

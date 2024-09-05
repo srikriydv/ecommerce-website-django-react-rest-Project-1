@@ -1,7 +1,20 @@
-import logo from '../asset/logo.avif';
 import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 
 function SingleProduct(props) {
+  const baseUrl = "http://127.0.0.1:8000/api";
+  const [Catagories, SetCatagories] = useState([]);
+  useEffect(() => {
+    fetchData(baseUrl + "/products/?vendor_cat=" + props.product.vendor.id);
+  }, []);
+  function fetchData(baseurl) {
+    fetch(baseurl) // api for the get request
+      .then((response) => response.json())
+      .then((data) => {
+        SetCatagories(data.results);
+      });
+  }
+
   console.log("produc image url",props.product.image);
   return (
     <>
@@ -19,6 +32,12 @@ function SingleProduct(props) {
             <button title="Add to Wishlist" className="btn btn-danger ms-1">
               <i className="fa fa-heart"></i>
             </button>
+            <hr />
+            <div>
+                  Catagories: {Catagories.map((cat, index)=><Link to={`/category/${cat.slug}/${cat.category.id}`}>
+                  {cat.category.title}
+                </Link>)}
+                </div>
           </div>
         </div>
       </div>
