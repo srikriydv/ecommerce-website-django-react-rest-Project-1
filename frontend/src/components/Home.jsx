@@ -65,7 +65,7 @@ function Home() {
         {/* Latest Product  */}
         <h3 className="mb-4">
           Latest Product
-          <Link to="/products" className="float-end btn btn-dark">
+          <Link to="/products" className="float-end btn btn-success">
             View All Product <i className="fa-solid fa-arrow-right-long"></i>
           </Link>
         </h3>
@@ -79,7 +79,7 @@ function Home() {
         {/* Popular Catagories  */}
         <h3 className="mb-4">
           Popular Catagories
-          <Link to="/categories" className="float-end btn btn-dark">
+          <Link to="/categories" className="float-end btn btn-success">
             View All Catagories <i className="fa-solid fa-arrow-right-long"></i>
           </Link>
         </h3>
@@ -95,7 +95,7 @@ function Home() {
         {/* Popular Product  */}
         <h3 className="mb-4">
           Popular Product
-          <Link to="/products" className="float-end btn btn-dark">
+          <Link to="/products" className="float-end btn btn-success">
             View All Product <i className="fa-solid fa-arrow-right-long"></i>
           </Link>
         </h3>
@@ -111,7 +111,7 @@ function Home() {
         {/* Popular Seller  */}
         <h3 className="mb-4">
           Popular Sellers
-          <Link to="/sellers" className="float-end btn btn-dark">
+          <Link to="/sellers" className="float-end btn btn-success">
             View All Sellers <i className="fa-solid fa-arrow-right-long"></i>
           </Link>
         </h3>

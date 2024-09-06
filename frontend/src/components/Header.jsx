@@ -5,7 +5,9 @@ import { useContext } from "react";
 
 function Header() {
   const linkStyle = {
-    fontSize: "40px",
+    fontSize: "60px",
+    color:'#3a9434',
+    fontWeight: "bold",
   };
   const { checkCustomer, checkVendor } = useContext(UserContext);
 
@@ -17,7 +19,15 @@ function Header() {
   }
   return (
     <>
-      <nav className="navbar navbar-expand-lg navbar-dark bg-success">
+    <style>
+        {`
+          .navbar-nav .nav-link, 
+          .navbar-nav .dropdown-item {
+            color: #3a9434 !important;
+          }
+        `}
+      </style>
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <div className="container">
           <button
             className="navbar-toggler"
@@ -31,7 +41,7 @@ function Header() {
             <span className="navbar-toggler-icon"></span>
           </button>
           <Link className="navbar-brand" style={linkStyle} to="/">
-            Python Market Place
+            <i className="fa-solid fa-shop" style={{ fontSize: '60px', color:'#3a9434' }}></i> पाठ्यक्रम बजार
           </Link>
           <div className="collapse navbar-collapse" id="navbarTogglerDemo03">
             <ul className="navbar-nav ms-auto mt-2 mt-lg-0">

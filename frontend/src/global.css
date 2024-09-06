@@ -1,0 +1,16 @@
+/* global.css */
+body {
+    color: #3a9434; /* Applies color to all text in body */
+    background: #1d1d1d;
+  }
+  
+  a {
+    color: #3a9434; /* Applies color to all links */
+  }
+  
+  h1, h2, h3, h4, h5, h6, p, span, div, li {
+    color: #3a9434; /* Apply color to common text elements */
+  }
+  
+  /* Ensure that any other text elements you use are also included */
+  

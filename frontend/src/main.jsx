@@ -8,6 +8,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min';
 // index.js or App.js
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { UserContext } from './Context.jsx';
+import './global.css'
 
 const checkCustomer=(localStorage.getItem('customer_login'));
 const checkVendor=(localStorage.getItem('vendor_login'));
