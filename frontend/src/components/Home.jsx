@@ -61,7 +61,7 @@ function Home() {
 
   return (
     <main className="mt-4">
-      <div className="container">
+      <div className="container w-75">
         {/* Latest Product  */}
         <h3 className="mb-4">
           Latest Product

@@ -3,15 +3,17 @@ body {
     color: #3a9434; /* Applies color to all text in body */
     /* background: #1d1d1d; */
     /* background-image: url(/frontend/src/asset/1.jpg); */
-  }
+    font-family: "Source Sans 3", sans-serif;
+}
   
   a {
     color: #3a9434; /* Applies color to all links */
+    font-family: "Source Sans 3", sans-serif;
   }
   
   h1, h2, h3, h4, h5, h6, p, span, div, li {
     color: #3a9434; /* Apply color to common text elements */
-  }
+    font-family: "Source Sans 3", sans-serif;
   
   /* Ensure that any other text elements you use are also included */
-  
+  }

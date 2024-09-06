@@ -28,7 +28,7 @@ function Header() {
         `}
       </style>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div className="container">
+        <div className="container w-75">
           <button
             className="navbar-toggler"
             type="button"
