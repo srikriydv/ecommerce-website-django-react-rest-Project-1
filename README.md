@@ -144,7 +144,6 @@ sqlparse==0.5.0
 - [Django](https://www.djangoproject.com/)
 - [Django REST framework](https://www.django-rest-framework.org/)
 - [React](https://reactjs.org/)
-```
 
 ### Notes:
 
