@@ -4,16 +4,16 @@ This project is an e-commerce application with a Django backend and a React fron
 
 ## Features
 
-- **User Authentication**: Register, login, and manage user accounts.
-- **Product Management**: Browse products, view details, and search by category.
+- **User Authentication**: Register, login, and manage vendor and customer accounts.
+- **Product Management**: Browse products, view details, wishlist product and search by category.
 - **Cart and Checkout**: Add products to the cart and complete purchases.
-- **Order Management**: View and manage order history.
+- **Order Management**: View and manage order of customers.
 
 ## Tech Stack
 
 - **Backend**: Django, Django REST framework
-- **Frontend**: React, Redux (if used)
-- **Database**: PostgreSQL (or other preferred database)
+- **Frontend**: React
+- **Database**: PostgreSQL 
 
 ## Setup and Installation
 
