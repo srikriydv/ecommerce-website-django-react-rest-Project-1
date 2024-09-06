@@ -22,8 +22,8 @@ This project is an e-commerce application with a Django backend and a React fron
 1. **Clone the repository**
 
     ```bash
-    git clone https://github.com/yourusername/ecommerce-project.git
-    cd ecommerce-project/backend
+    git clone https://github.com/srikriydv/ecommerce-website-django-react.git
+    cd ecommerce-website-django-react/backend_api
     ```
 
 2. **Create and activate a virtual environment**
