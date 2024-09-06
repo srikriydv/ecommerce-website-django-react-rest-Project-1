@@ -28,7 +28,7 @@ function SingleSeller(props) {
   return (
     <>
       <div className="col-12 col-md-3 mb-4">
-        <div className="card bg-dark">
+        <div className="card">
           <Link to={`/seller/${vendor.id}`} >
             <img style={imgStyle} src={vendor.profile_img} className="card-img-top" alt="..." />
           </Link>

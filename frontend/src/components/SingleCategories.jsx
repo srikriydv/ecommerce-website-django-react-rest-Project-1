@@ -13,7 +13,7 @@ function SingleCategories(props) {
   return (
     <>
       <div className="col-12 col-md-3 mb-4">
-        <div className="card bg-dark">
+        <div className="card">
           <Link to={`/category/${category.title}/${category.id}`} >
             <img style={imgStyle} src={category.image} className="card-img-top" alt="..." />
           </Link>

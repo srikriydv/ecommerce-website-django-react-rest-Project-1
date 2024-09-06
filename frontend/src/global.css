@@ -1,7 +1,8 @@
 /* global.css */
 body {
     color: #3a9434; /* Applies color to all text in body */
-    background: #1d1d1d;
+    /* background: #1d1d1d; */
+    /* background-image: url(/frontend/src/asset/1.jpg); */
   }
   
   a {
