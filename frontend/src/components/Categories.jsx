@@ -40,7 +40,7 @@ function Categories() {
   } 
 
   return (
-    <section className="container mt-4">
+    <section className="container w-75 mt-4">
       {/* All Catagories  */}
       <h3 className="mb-4">All Categories</h3>
       <div className="row">

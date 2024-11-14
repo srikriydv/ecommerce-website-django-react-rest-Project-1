@@ -40,7 +40,7 @@ function AllProducts() {
   } 
 
   return (
-    <section className="container mt-4">
+    <section className="container w-75 mt-4">
       <h3 className="mb-4">
         All Products
       </h3>

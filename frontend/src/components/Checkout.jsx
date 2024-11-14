@@ -25,7 +25,7 @@ function Checkout(props) {
     };
 
     return (
-        <div className="container mt-4">
+        <div className="container w-75 mt-4">
             <h3 className="mb-4">All Items ({cartItems})</h3>
             {cartItems !== 0 ? (
                 <div className="row">

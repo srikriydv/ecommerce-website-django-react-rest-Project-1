@@ -38,7 +38,7 @@ function SellerDetail() {
   }
 
   return (
-    <section className="container mt-4">
+    <section className="container w-75 mt-4">
       <div className="row">
         <div className="col-4">
           <img src={vendorImg} className="img-thumbnail" alt="Vendor"></img>

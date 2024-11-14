@@ -48,7 +48,7 @@ function Login(props) {
 
     return (
         <>
-            <div className="container mt-4">
+            <div className="container w-75 mt-4">
                 <h3 className='mb-4'>Login</h3>
                 <div className="row">
                     <div className="col-md-8 col-12 offset-2">

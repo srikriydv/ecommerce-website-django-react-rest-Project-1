@@ -41,7 +41,7 @@ function CustomerOrders() {
 
     return (
         <>
-            <div className="container mt-4">
+            <div className="container w-75 mt-4">
                 <h3 className="mb-4">Dashboard</h3>
                 <div className="row">
                     <div className="col-md-3 col-12 mb-2">

@@ -5,7 +5,7 @@ function OrderFailure() {
 
     return (
         <>
-            <div className="container mt-4">
+            <div className="container w-75 mt-4">
                 <div className="row">
                     <div className="col-md-8 offset-2">
                         <div className="card">

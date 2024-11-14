@@ -371,10 +371,6 @@ class OrderList(generics.ListCreateAPIView, generics.DestroyAPIView):
         # Save the new order with the provided customer
         serializer.save(customer_id=customer_id)
 
-    def delete(self):
-        customer_id
-        return qs
-
 class OrderItemList(generics.ListCreateAPIView):
     queryset = models.OrderItems.objects.all()
     serializer_class = serializers.OrderItemSerializer
@@ -392,6 +388,27 @@ class OrderItemList(generics.ListCreateAPIView):
                 pass  # Ignore invalid values for vendor_id
         
         return qs
+    
+class OrderItemCreate(generics.CreateAPIView):
+    queryset = models.OrderItems.objects.all()
+    serializer_class = serializers.OrderItemCreateSerializer
+
+    def perform_create(self, serializer):
+        # Retrieve data from the request
+        order_id = self.request.data.get('order')
+        product_id = self.request.data.get('product')
+
+        # Validate that order and product exist
+        try:
+            order = models.Order.objects.get(id=order_id)
+            product = models.Product.objects.get(id=product_id)
+        except models.Order.DoesNotExist:
+            raise serializers.ValidationError("Order does not exist")
+        except models.Product.DoesNotExist:
+            raise serializers.ValidationError("Product does not exist")
+
+        # Save the order item instance
+        serializer.save(order=order, product=product)
     
 class UpdateOrderItemListStatus(generics.UpdateAPIView):
     queryset = models.OrderItems.objects.all()

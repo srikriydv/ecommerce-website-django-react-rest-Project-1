@@ -41,6 +41,7 @@ urlpatterns = [
     #Order
     path('orders/',  views.OrderList.as_view()),
     path('order/<int:pk>/',  views.OrderDetail.as_view()),
+    path('orderitemcreate/',  views.OrderItemCreate.as_view()),
     path('orderitems/',  views.OrderItemList.as_view()),
     path('orderitem/<int:pk>/update-order-status/<str:order_status>/',  views.UpdateOrderItemListStatus.as_view()),
     path('customer/<int:pk>/orderitems/',  views.CustomerOrderItemList.as_view()),

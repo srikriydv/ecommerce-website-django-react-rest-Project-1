@@ -115,7 +115,7 @@ function ProductDetail() {
   }
 
   return (
-    <section className="container mt-4">
+    <section className="container w-75 mt-4">
       <div className="row">
         <div className="col-4">
           <div id="productThumbnailSlider" className="carousel carousel-dark slide carousel-fade" data-bs-ride="true">

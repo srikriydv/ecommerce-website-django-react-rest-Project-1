@@ -26,11 +26,11 @@ function ConfirmOrder() {
         console.log("customer id", customerId);
         const formData = new FormData();
         formData.append('customer', customerId);
-        console.log("formData", formData);
+        // console.log("formData", formData);
         // Submit Data
         axios.post(baseUrl + 'orders/', formData)
             .then(function (response) {
-                console.log("response of addOrderInTable", response.data);
+                // console.log("response of addOrderInTable", response.data);
                 var orderId = response.data.id;
                 setOrderId(orderId);
                 orderItems(orderId);
@@ -45,7 +45,9 @@ function ConfirmOrder() {
     function orderItems(orderId) {
         console.log("order id bolte", orderId);
         var prevCart = localStorage.getItem('cartData');
+        console.log(prevCart)
         var cartJson = JSON.parse(prevCart);
+        console.log(cartJson);
 
         if (cartJson != null) {
             cartJson.map((cart, index) => {
@@ -54,8 +56,9 @@ function ConfirmOrder() {
                 formData.append('product', cart.product.id);
                 formData.append('qty', 1);
                 formData.append('price', cart.product.price);
+                console.log("formdata", formData);
                 // Submit Data
-                axios.post(baseUrl + 'orderitems/', formData)
+                axios.post(baseUrl + 'orderitemcreate/', formData)
                     .then(function (response) {
                         console.log("Response of OrderItems", response.data);
                         // Remove Cart Items
