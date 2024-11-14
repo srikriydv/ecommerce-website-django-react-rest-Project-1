@@ -9,6 +9,10 @@ local_settings.py
 # If your build process includes a .env file with environment variables
 .env
 
+# Ignore media folder
+backend_api/media/
+media/
+
 # Django stuff:
 *.sqlite3
 *.mo
